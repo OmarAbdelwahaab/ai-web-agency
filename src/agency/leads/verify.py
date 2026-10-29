@@ -83,7 +83,8 @@ def check_web_presence(
         try:
             resp = client.get(url, params=params, timeout=10)
             if resp.status_code == 200:
-                return _parse_items(resp.json().get("items", []))
+                data = resp.json()
+                return _parse_items(data.get("items") or data.get("organic") or [])
         except Exception as e:
             log.warning("Web presence check failed: %s", e)
         return None
@@ -92,7 +93,8 @@ def check_web_presence(
         try:
             resp = c.get(url, params=params)
             if resp.status_code == 200:
-                return _parse_items(resp.json().get("items", []))
+                data = resp.json()
+                return _parse_items(data.get("items") or data.get("organic") or [])
         except Exception as e:
             log.warning("Web presence check failed: %s", e)
     return None

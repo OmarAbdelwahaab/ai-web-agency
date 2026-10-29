@@ -23,9 +23,27 @@ CATEGORIES = {
     "hardware": ("shop", "hardware|doityourself"),
 }
 
+ALIASES = {
+    "restaurant": ("restaurant", "restaurants", "cafe", "food", "diner", "bistro", "bakery"),
+    "pharmacy": ("pharmacy", "pharmacies", "drugstore"),
+    "plumber": ("plumber", "plumbers", "plumbing"),
+    "electrician": ("electrician", "electricians", "electrical"),
+    "hairdresser": ("hairdresser", "hairdressers", "barber", "barbers", "salon"),
+    "hardware": ("hardware", "diy"),
+}
+
 
 def build_query(category: str, area_name: str) -> str:
-    key, values = CATEGORIES[category]
+    cat = category.lower().strip()
+    if cat not in CATEGORIES:
+        for k, aliases in ALIASES.items():
+            if cat in aliases or any(a in cat for a in aliases):
+                cat = k
+                break
+    if cat not in CATEGORIES:
+        available = ", ".join(sorted(CATEGORIES.keys()))
+        raise ValueError(f"Unknown OSM category '{category}'. Available: {available}")
+    key, values = CATEGORIES[cat]
     return f"""
 [out:json][timeout:90];
 area["name"="{area_name}"]["boundary"="administrative"]->.a;

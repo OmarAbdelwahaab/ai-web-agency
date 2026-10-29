@@ -94,6 +94,14 @@ def test_osm_build_query():
     assert 'area["name"="Austin"]' in q
     assert 'nwr["craft"~"^(plumber)$"]' in q
 
+    # Case insensitive and alias matching
+    q2 = osm.build_query("Plumbing", "Austin")
+    assert 'nwr["craft"~"^(plumber)$"]' in q2
+
+    # Unknown category
+    with pytest.raises(ValueError, match="Unknown OSM category"):
+        osm.build_query("astrology", "Austin")
+
 
 def test_osm_search():
     mock_client = MagicMock()
@@ -189,6 +197,13 @@ def test_check_web_presence_finds_real_site():
 
     site = verify.check_web_presence("Sample Plumbing", "Austin", "TX", api_key="fake", client=mock_client)
     assert site == "https://www.sampleplumbingaustin.com"
+
+    # Support 'organic' key
+    mock_resp.json.return_value = {
+        "organic": [{"link": "https://www.sampleplumbingaustin.com"}]
+    }
+    site_organic = verify.check_web_presence("Sample Plumbing", "Austin", "TX", api_key="fake", client=mock_client)
+    assert site_organic == "https://www.sampleplumbingaustin.com"
 
 
 def test_verify_lead_outcomes(conn):

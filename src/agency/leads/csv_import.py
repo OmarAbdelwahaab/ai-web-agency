@@ -16,24 +16,28 @@ from agency.db import insert_lead, phone_in_leads
 from agency.phone import to_e164
 
 ALIASES = {
-    "name": ("name", "title", "business_name", "business"),
-    "phone": ("phone", "phone_number", "telephone", "tel"),
-    "website": ("website", "website_uri", "url", "site"),
-    "address": ("address", "full_address", "formatted_address", "complete_address"),
-    "category": ("category", "type", "categories", "main_category"),
-    "rating": ("rating", "review_rating", "stars"),
-    "rating_count": ("review_count", "rating_count", "reviews", "user_ratings_total"),
+    "name": ("name", "title", "business_name", "business", "company", "company_name", "organization"),
+    "phone": ("phone", "phone_number", "telephone", "tel", "mobile", "contact_number", "contact_phone"),
+    "website": ("website", "website_uri", "url", "site", "web", "homepage"),
+    "address": ("address", "full_address", "formatted_address", "complete_address", "street_address", "street"),
+    "category": ("category", "type", "categories", "main_category", "industry", "niche"),
+    "rating": ("rating", "review_rating", "stars", "score"),
+    "rating_count": ("review_count", "rating_count", "reviews", "user_ratings_total", "num_reviews"),
     "lat": ("lat", "latitude"),
-    "lng": ("lng", "lon", "longitude"),
-    "city": ("city", "locality"),
-    "state": ("state", "region", "state_code"),
+    "lng": ("lng", "lon", "long", "longitude"),
+    "city": ("city", "locality", "town"),
+    "state": ("state", "region", "state_code", "province"),
 }
 
 
+def _norm_key(k: str) -> str:
+    return re.sub(r"[\s_-]+", "", k.strip().lower())
+
+
 def _pick(row: dict, key: str):
-    lowered = {k.strip().lower(): v for k, v in row.items() if k}
+    cleaned = {_norm_key(k): v for k, v in row.items() if k}
     for alias in ALIASES[key]:
-        v = lowered.get(alias)
+        v = cleaned.get(_norm_key(alias))
         if v not in (None, ""):
             return v.strip() if isinstance(v, str) else v
     return None
