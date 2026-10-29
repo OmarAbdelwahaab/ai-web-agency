@@ -13,12 +13,12 @@ Prompt: "Set up the dev environment, pin working dependency versions in pyprojec
 Prompt: "Review src/agency/config.py, db.py and compliance/gates.py. Add edge-case tests for time zones around midnight and DST, DNC matching with different phone formats, and attempt limits."
 
 ## Phase 2: Site generator (can be finished with no phone or API at all)
-- [ ] Template renders for all four themes, responsive, accessible, readable on mobile
-- [ ] `agency demo-site` works; JSON-LD and meta tags present
-- [ ] `sitegen/ai_fill.py` fills SiteConfig from a lead record using the LLM, validated, with deterministic fallback
-- [ ] Deploy to Cloudflare Pages behind `DEPLOY_ENABLED`
-- [ ] `bash scripts/setup_skills.sh --core` run; `agency qa-site` works for all four themes (detector clean, phone screenshot reviewed)
-- [ ] Optional, once: polish the template with ONE design skill (taste-skill or Impeccable commands), then stop using it for per-client builds
+- [x] Template renders for all four themes, responsive, accessible, readable on mobile
+- [x] `agency demo-site` works; JSON-LD and meta tags present
+- [x] `sitegen/ai_fill.py` fills SiteConfig from a lead record using the LLM, validated, with deterministic fallback
+- [x] Deploy to Cloudflare Pages behind `DEPLOY_ENABLED`
+- [x] `bash scripts/setup_skills.sh --core` run; `agency qa-site` works for all four themes (detector clean, phone screenshot reviewed)
+- [x] Optional, once: polish the template with ONE design skill (taste-skill or Impeccable commands), then stop using it for per-client builds
 Prompt: "Polish the site template in src/agency/sitegen/templates. Keep it fast, no JS frameworks, no stock images. Test with five fake businesses (restaurant, pharmacy, plumber, barber, hardware store) and screenshot each on mobile width."
 
 ## Phase 3: Lead pipeline

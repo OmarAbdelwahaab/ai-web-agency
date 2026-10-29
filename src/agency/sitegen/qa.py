@@ -30,11 +30,12 @@ class DetectResult:
 
 def run_detector(site_dir: Path, *, timeout: int = 120) -> DetectResult:
     """Run `impeccable detect --json`. Exit 0 = clean, 2 = findings, 1 = could not scan."""
-    if not shutil.which("npx"):
+    npx = shutil.which("npx")
+    if not npx:
         return DetectResult("skipped", detail="npx not installed")
     try:
         proc = subprocess.run(
-            ["npx", "--yes", "impeccable", "detect", "--json", str(site_dir)],
+            [npx, "--yes", "impeccable", "detect", "--json", str(site_dir)],
             capture_output=True, text=True, timeout=timeout,
         )
     except (subprocess.TimeoutExpired, OSError) as e:

@@ -5,7 +5,7 @@ Design contract for the site template in `src/agency/sitegen/templates/`. Keep t
 ## Themes
 | Theme | Used for | Background | Ink | Accent | Panel | Display font | Body font |
 |---|---|---|---|---|---|---|---|
-| food | restaurants, cafes, bakeries | #F6F1FA | #2A1636 | #E8A317 | #2A1636 | Young Serif | Instrument Sans |
+| food | restaurants, cafes, bakeries | #F6F1FA | #2A1636 | #E8A317 | #2A1636 | Young Serif | Cabin |
 | health | pharmacies, clinics, dental | #F2F8F7 | #0C3B3F | #12806F | #0C3B3F | Newsreader | Figtree |
 | trades | plumbing, electric, HVAC, repair | #FFFFFF | #0F1B2D | #F25C05 | #0F1B2D | Archivo 800 | Archivo |
 | retail | shops and everything else | #F1F4FA | #18223A | #3556D8 | #18223A | Bricolage Grotesque | Hanken Grotesk |

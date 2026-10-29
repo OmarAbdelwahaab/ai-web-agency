@@ -62,18 +62,19 @@ def slugify(name: str, suffix: str | int = "") -> str:
     return f"{base}-{suffix}" if suffix != "" else base
 
 
-_FOOD = ("restaurant", "cafe", "coffee", "bakery", "food", "bar", "pizza", "diner")
+_FOOD = ("restaurant", "cafe", "coffee", "bakery", "food", "pizza", "diner", "bistro")
 _HEALTH = ("pharmacy", "clinic", "dental", "dentist", "health", "chiropract", "optic", "vet")
 _TRADES = ("plumb", "electric", "hvac", "roof", "contractor", "repair", "locksmith", "landscap", "clean", "pest", "garage")
 
 
 def theme_for_category(category: str | None) -> Theme:
     c = (category or "").lower()
-    if any(k in c for k in _FOOD):
+    words = set(re.findall(r"[a-z]+", c))
+    if words.intersection({"bar", "bars", "pub", "pubs"}) or any(any(w.startswith(k) for w in words) for k in _FOOD):
         return "food"
-    if any(k in c for k in _HEALTH):
+    if any(any(w.startswith(k) for w in words) for k in _HEALTH):
         return "health"
-    if any(k in c for k in _TRADES):
+    if any(any(w.startswith(k) for w in words) for k in _TRADES):
         return "trades"
     return "retail"
 

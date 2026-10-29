@@ -14,8 +14,8 @@ THEMES = {
     "food": dict(
         bg="#F6F1FA", ink="#2A1636", muted="#6B5A78", accent="#E8A317", on_accent="#2A1636",
         panel="#2A1636", on_panel="#F6F1FA", rule="#D9CDE3",
-        display="'Young Serif', Georgia, serif", body="'Instrument Sans', system-ui, sans-serif",
-        fonts="family=Young+Serif&family=Instrument+Sans:wght@400;500;600",
+        display="'Young Serif', Georgia, serif", body="'Cabin', system-ui, sans-serif",
+        fonts="family=Young+Serif&family=Cabin:wght@400;500;600",
     ),
     "health": dict(
         bg="#F2F8F7", ink="#0C3B3F", muted="#4F7377", accent="#12806F", on_accent="#FFFFFF",

@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ cfg.business_name }} | {{ cfg.tagline }}</title>
 <meta name="description" content="{{ (cfg.about or cfg.tagline)|truncate(155, True, '') }}">
+<meta property="og:title" content="{{ cfg.business_name }} | {{ cfg.tagline }}">
+<meta property="og:description" content="{{ (cfg.about or cfg.tagline)|truncate(155, True, '') }}">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?{{ t.fonts|safe }}&display=swap">
