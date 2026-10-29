@@ -104,3 +104,24 @@ def insert_lead(conn: sqlite3.Connection, **fields) -> int | None:
 
 def get_lead(conn: sqlite3.Connection, lead_id: int) -> sqlite3.Row | None:
     return conn.execute("SELECT * FROM leads WHERE id = ?", (lead_id,)).fetchone()
+
+
+def phone_in_leads(conn: sqlite3.Connection, phone: str | None) -> bool:
+    """Check if a phone number already exists in the leads table across common formats."""
+    if not phone:
+        return False
+    from agency.phone import to_e164
+
+    norm = to_e164(phone)
+    candidates = {phone}
+    if norm:
+        candidates.add(norm)
+        if norm.startswith("+1") and len(norm) == 12:
+            candidates.add(norm[2:])  # 10 digits
+            candidates.add(norm[1:])  # 11 digits
+    placeholders = ", ".join("?" for _ in candidates)
+    row = conn.execute(
+        f"SELECT 1 FROM leads WHERE phone_e164 IN ({placeholders}) LIMIT 1",
+        tuple(candidates),
+    ).fetchone()
+    return row is not None

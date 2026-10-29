@@ -36,3 +36,16 @@ def test_duplicates_and_missing_fields(tmp_path, conn):
 def test_rows_without_coordinates_are_flagged(tmp_path, conn):
     p = write(tmp_path, "name,phone\nShop,512-555-0100\n")
     assert import_csv(conn, p)["no_coordinates"] == 1
+
+
+def test_cross_source_dedupe_with_existing_lead(tmp_path, conn):
+    from agency.db import insert_lead
+
+    # Existing lead from places
+    insert_lead(conn, source="places", source_id="p100", name="Original Shop", phone_e164="+15125550199")
+
+    # CSV has the same phone in formatted string
+    p = write(tmp_path, "name,phone\nCSV Copy,(512) 555-0199\nBrand New Shop,(512) 555-0188\n")
+    out = import_csv(conn, p, default_lat=30.27, default_lng=-97.74)
+    assert out["inserted"] == 1
+    assert out["duplicates"] == 1

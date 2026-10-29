@@ -12,7 +12,8 @@ import re
 import sqlite3
 from pathlib import Path
 
-from agency.db import insert_lead
+from agency.db import insert_lead, phone_in_leads
+from agency.phone import to_e164
 
 ALIASES = {
     "name": ("name", "title", "business_name", "business"),
@@ -68,6 +69,9 @@ def import_csv(
             name, phone = _pick(row, "name"), _pick(row, "phone")
             if not name or not phone:
                 counts["skipped_no_name_or_phone"] += 1
+                continue
+            if phone_in_leads(conn, phone):
+                counts["duplicates"] += 1
                 continue
             lat = _float(_pick(row, "lat")) if _pick(row, "lat") else default_lat
             lng = _float(_pick(row, "lng")) if _pick(row, "lng") else default_lng

@@ -22,11 +22,11 @@ Prompt: "Review src/agency/config.py, db.py and compliance/gates.py. Add edge-ca
 Prompt: "Polish the site template in src/agency/sitegen/templates. Keep it fast, no JS frameworks, no stock images. Test with five fake businesses (restaurant, pharmacy, plumber, barber, hardware store) and screenshot each on mobile width."
 
 ## Phase 3: Lead pipeline
-- [ ] `leads/places.py` works with a real key (Enterprise-tier fields; watch free caps)
-- [ ] `leads/osm.py` returns candidates; results deduped by phone
-- [ ] `agency import-csv` verified with a real CSV (flexible columns, default coordinates for the city)
-- [ ] `leads/verify.py` adds timezone, phone validation, social-only detection
-- [ ] Optional: web-presence check via a search API before marking "no website"
+- [x] `leads/places.py` works with a real key (Enterprise-tier fields; watch free caps)
+- [x] `leads/osm.py` returns candidates; results deduped by phone
+- [x] `agency import-csv` verified with a real CSV (flexible columns, default coordinates for the city)
+- [x] `leads/verify.py` adds timezone, phone validation, social-only detection
+- [x] Optional: web-presence check via a search API before marking "no website"
 Prompt: "Finish the lead pipeline. Add pagination and cost logging to places.py, dedupe across sources, and implement the optional web-presence check behind SEARCH_API_KEY."
 
 ## Phase 4: Voice agent (terminal only)

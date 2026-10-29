@@ -37,6 +37,8 @@ class Settings:
 
     places_api_key: str = field(default_factory=lambda: os.environ.get("GOOGLE_PLACES_API_KEY", ""))
     overpass_url: str = field(default_factory=lambda: os.environ.get("OVERPASS_URL", "https://overpass-api.de/api/interpreter"))
+    search_api_key: str = field(default_factory=lambda: os.environ.get("SEARCH_API_KEY", ""))
+    search_engine_id: str = field(default_factory=lambda: os.environ.get("SEARCH_ENGINE_ID", ""))
 
     llm_base_url: str = field(default_factory=lambda: os.environ.get("LLM_BASE_URL", "https://api.groq.com/openai/v1"))
     llm_api_key: str = field(default_factory=lambda: os.environ.get("LLM_API_KEY", ""))
