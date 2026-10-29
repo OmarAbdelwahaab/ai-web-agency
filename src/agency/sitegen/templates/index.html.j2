@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ cfg.business_name }} | {{ cfg.tagline }}</title>
+<meta name="description" content="{{ (cfg.about or cfg.tagline)|truncate(155, True, '') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{{ t.fonts|safe }}&display=swap">
+<style>
+:root{--bg:{{ t.bg|safe }};--ink:{{ t.ink|safe }};--muted:{{ t.muted|safe }};--accent:{{ t.accent|safe }};--on-accent:{{ t.on_accent|safe }};--panel:{{ t.panel|safe }};--on-panel:{{ t.on_panel|safe }};--rule:{{ t.rule|safe }};--display:{{ t.display|safe }};--body:{{ t.body|safe }}}
+</style>
+<link rel="stylesheet" href="site.css">
+{% set ld = {"@context": "https://schema.org", "@type": "LocalBusiness", "name": cfg.business_name, "telephone": cfg.phone_e164} %}
+{% if cfg.address %}{% set _ = ld.update({"address": cfg.address}) %}{% endif %}
+<script type="application/ld+json">{{ ld|tojson }}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <span class="brand">{{ cfg.business_name }}</span>
+  <a class="top-call" href="tel:{{ cfg.phone_e164 }}">{{ cfg.phone }}</a>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>{{ cfg.business_name }}</h1>
+      <p class="tagline">{{ cfg.tagline }}</p>
+      <a class="btn" href="tel:{{ cfg.phone_e164 }}">{{ cfg.cta_label }} {{ cfg.phone }}</a>
+      {% if cfg.address %}<p class="where">{{ cfg.address }}</p>{% endif %}
+    </div>
+    {% if cfg.hours %}
+    <aside class="hours" aria-labelledby="hours-h">
+      <h2 id="hours-h">Opening hours</h2>
+      <dl>
+        {% for h in cfg.hours %}<div><dt>{{ h.day }}</dt><dd>{{ h.text }}</dd></div>{% endfor %}
+      </dl>
+    </aside>
+    {% endif %}
+  </section>
+
+  {% if cfg.services %}
+  <section class="block" aria-labelledby="services-h">
+    <h2 id="services-h">What we do</h2>
+    <ul class="rows">
+      {% for s in cfg.services %}
+      <li>
+        <div><strong>{{ s.name }}</strong>{% if s.description %}<p>{{ s.description }}</p>{% endif %}</div>
+        {% if s.price %}<span class="price">{{ s.price }}</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if cfg.about %}
+  <section class="block" aria-labelledby="about-h">
+    <h2 id="about-h">About us</h2>
+    <p class="prose">{{ cfg.about }}</p>
+  </section>
+  {% endif %}
+
+  {% if cfg.maps_query %}
+  <section class="block" aria-labelledby="find-h">
+    <h2 id="find-h">Find us</h2>
+    {% if cfg.address %}<p class="prose">{{ cfg.address }}</p>{% endif %}
+    <p><a href="https://www.google.com/maps/search/?api=1&query={{ cfg.maps_query|urlencode }}">Get directions</a></p>
+    <iframe class="map" title="Map showing {{ cfg.business_name }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q={{ cfg.maps_query|urlencode }}&output=embed"></iframe>
+  </section>
+  {% endif %}
+</main>
+
+<footer class="foot">
+  <p>{{ cfg.business_name }}{% if cfg.address %}, {{ cfg.address }}{% endif %}</p>
+  <p><a href="tel:{{ cfg.phone_e164 }}">{{ cfg.phone }}</a>{% if cfg.email %} &nbsp;|&nbsp; <a href="mailto:{{ cfg.email }}">{{ cfg.email }}</a>{% endif %}</p>
+  {% if cfg.credit %}<p class="credit">{{ cfg.credit }}</p>{% endif %}
+</footer>
+
+<a class="call-bar" href="tel:{{ cfg.phone_e164 }}">{{ cfg.cta_label }} {{ cfg.phone }}</a>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Run on a small VPS. Two services share the same image and the ./data volume.
+services:
+  voice-worker:
+    build: .
+    env_file: .env
+    volumes: ["./data:/app/data", "./output:/app/output"]
+    restart: unless-stopped
+  telegram-bot:
+    build: .
+    env_file: .env
+    command: ["agency", "telegram-bot"]
+    volumes: ["./data:/app/data", "./output:/app/output"]
+    restart: unless-stopped

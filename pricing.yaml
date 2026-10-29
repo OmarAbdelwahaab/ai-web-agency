@@ -1,0 +1,25 @@
+# EXAMPLE VALUES. Replace with your real offer before any live call.
+# The voice agent may ONLY quote prices/terms from this file (via the get_price_list tool).
+# If a value is null, the agent must say a teammate will confirm it.
+currency: USD
+delivery_promise: "We build your site from our ready-made framework and send you a link to review within about an hour after you confirm and pay."
+packages:
+  - id: starter
+    name: "Starter site"
+    price_usd: 299          # EXAMPLE
+    monthly_usd: null       # hosting/maintenance, null = not offered yet
+    includes:
+      - "One-page site with your hours, services, phone button and map"
+      - "Mobile friendly"
+      - "Hosting on a free subdomain"
+  - id: standard
+    name: "Standard site"
+    price_usd: 499          # EXAMPLE
+    monthly_usd: 25         # EXAMPLE
+    includes:
+      - "Everything in Starter"
+      - "Your own domain name set up"
+      - "Contact form that emails you"
+      - "One round of edits"
+refund_policy: null          # SET ME. Agent must not improvise refund terms.
+discounts_allowed: false     # Agent must never offer discounts unless you change this.
