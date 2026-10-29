@@ -19,7 +19,7 @@ def _package(pricing: dict, package_id: str) -> dict:
     for p in pricing.get("packages", []):
         if p["id"] == package_id:
             return p
-    return {}
+    return {"id": package_id, "name": package_id.capitalize(), "price_usd": 299}
 
 
 def handle_deal(
@@ -41,15 +41,32 @@ def handle_deal(
         return {"client_id": existing["id"], "existing": True}
 
     lead = get_lead(conn, lead_id)
-    cur = conn.execute(
-        "INSERT INTO clients (lead_id, package_id, contact_email) VALUES (?, ?, ?)", (lead_id, package_id, contact_email)
-    )
-    client_id = cur.lastrowid
+    if lead is None:
+        raise ValueError(f"Lead {lead_id} not found")
+
+    try:
+        cur = conn.execute(
+            "INSERT INTO clients (lead_id, package_id, contact_email) VALUES (?, ?, ?)",
+            (lead_id, package_id, contact_email),
+        )
+        client_id = cur.lastrowid
+        conn.commit()
+    except sqlite3.IntegrityError:
+        existing = conn.execute("SELECT * FROM clients WHERE lead_id = ?", (lead_id,)).fetchone()
+        if existing:
+            return {"client_id": existing["id"], "existing": True}
+        raise
+
+    conn.execute("UPDATE leads SET status = 'yes' WHERE id = ?", (lead_id,))
     conn.commit()
 
     pkg = _package(load_pricing(s.pricing_path), package_id)
     link = create_payment_link(
-        s.payment_provider, client_id=client_id, amount_usd=pkg.get("price_usd"), description=pkg.get("name", package_id)
+        s.payment_provider,
+        client_id=client_id,
+        amount_usd=pkg.get("price_usd"),
+        description=pkg.get("name", package_id),
+        settings=s,
     )
 
     cfg = fill_config(lead, call_notes, credit=f"Website by {s.agency_name}", settings=s)
@@ -100,7 +117,11 @@ def finalize_client(conn: sqlite3.Connection, client_id: int, *, settings: Setti
 
     note = "" if c["payment_status"] == "paid" else " (payment not marked paid)"
     if c["contact_email"] and email_mod.email_configured():
-        lead = get_lead(conn, c["lead_id"])
-        email_mod.send_site_link(c["contact_email"], lead["name"], url, s.agency_name)
-        note += "; emailed to client"
+        try:
+            lead = get_lead(conn, c["lead_id"])
+            email_mod.send_site_link(c["contact_email"], lead["name"], url, s.agency_name)
+            note += "; emailed to client"
+        except Exception as e:
+            log.exception("failed to email site link to client")
+            note += f"; email failed ({e})"
     return f"Deployed: {url}{note}"

@@ -54,6 +54,8 @@ class Settings:
     telegram_chat_id: str = field(default_factory=lambda: os.environ.get("TELEGRAM_CHAT_ID", ""))
 
     payment_provider: str = field(default_factory=lambda: os.environ.get("PAYMENT_PROVIDER", "manual"))
+    stripe_api_key: str = field(default_factory=lambda: os.environ.get("STRIPE_API_KEY", ""))
+    payment_link_template: str = field(default_factory=lambda: os.environ.get("PAYMENT_LINK_TEMPLATE", ""))
     deploy_enabled: bool = field(default_factory=lambda: _bool("DEPLOY_ENABLED"))
     qa_enabled: bool = field(default_factory=lambda: _bool("QA_ENABLED"))
 

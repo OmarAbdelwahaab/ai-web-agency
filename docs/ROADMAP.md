@@ -42,10 +42,10 @@ Prompt: "Read the current LiveKit Agents docs, fix voice/agent.py to match the i
 Manual steps: create a SIP provider account, buy/register a US number, create an outbound trunk in LiveKit, put `SIP_OUTBOUND_TRUNK_ID` in `.env`.
 
 ## Phase 6: Post-sale pipeline
-- [ ] Telegram bot alerts, `/approve`, `/reject`, `/status`
-- [ ] Payment provider chosen (manual by default); payment link flow
-- [ ] Build preview, owner approval, deploy, send link
-- [ ] With `QA_ENABLED=true`: detector line and phone screenshot arrive in Telegram with the preview
+- [x] Telegram bot alerts, `/approve`, `/reject`, `/status`
+- [x] Payment provider chosen (manual by default); payment link flow
+- [x] Build preview, owner approval, deploy, send link
+- [x] With `QA_ENABLED=true`: detector line and phone screenshot arrive in Telegram with the preview
 Prompt: "Wire pipeline/post_sale.py end to end with fakes, then with real Telegram. Add idempotency so a repeated deal event cannot create two clients."
 
 ## Phase 7: Hardening and deploy
