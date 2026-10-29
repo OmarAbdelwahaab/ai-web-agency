@@ -7,6 +7,7 @@ from datetime import datetime, time, timezone
 from zoneinfo import ZoneInfo
 
 from agency.config import Settings, get_settings
+from agency.db import has_legal_review
 from agency.phone import to_e164
 
 # TODO(lawyer): fill with stricter per-state windows, e.g. {"OK": (time(8, 0), time(20, 0))}.
@@ -89,6 +90,19 @@ def _evaluate(conn, lead, live: bool, s: Settings, now_utc: datetime | None) -> 
         return GateResult(False, "LIVE_DIALING_ENABLED is false")
     if live and not s.legal_review_done:
         return GateResult(False, "LEGAL_REVIEW_DONE is false")
+    if live and not has_legal_review(conn):
+        return GateResult(False, "no attorney sign-off recorded in database")
+
+    # Check daily call cap
+    if now_utc is not None:
+        date_str = now_utc.strftime("%Y-%m-%d")
+        row = conn.execute("SELECT COUNT(*) FROM calls WHERE date(started_at) = date(?)", (date_str,)).fetchone()
+    else:
+        row = conn.execute("SELECT COUNT(*) FROM calls WHERE date(started_at) = date('now')").fetchone()
+    calls_today = row[0] if row else 0
+    if calls_today >= s.daily_call_cap:
+        return GateResult(False, f"daily call cap reached ({calls_today}/{s.daily_call_cap})")
+
     phone = lead["phone_e164"]
     if not phone or not phone.startswith("+1"):
         return GateResult(False, "missing or non-US phone number")
@@ -100,6 +114,25 @@ def _evaluate(conn, lead, live: bool, s: Settings, now_utc: datetime | None) -> 
         return GateResult(False, "number is in internal DNC list")
     if lead["attempts"] >= s.max_attempts:
         return GateResult(False, "attempt limit reached")
+
+    # Check cooldown between previous call attempt and now
+    if lead["attempts"] > 0 and s.min_call_interval_hours > 0:
+        prev = conn.execute(
+            "SELECT started_at FROM calls WHERE lead_id = ? ORDER BY id DESC LIMIT 1",
+            (lead["id"],),
+        ).fetchone()
+        if prev and prev["started_at"]:
+            try:
+                prev_dt = datetime.fromisoformat(prev["started_at"])
+                if prev_dt.tzinfo is None:
+                    prev_dt = prev_dt.replace(tzinfo=timezone.utc)
+                now_check = now_utc if now_utc is not None else datetime.now(timezone.utc)
+                diff_hours = (now_check - prev_dt).total_seconds() / 3600.0
+                if diff_hours < s.min_call_interval_hours:
+                    return GateResult(False, f"cooldown between attempts not elapsed ({diff_hours:.1f}h < {s.min_call_interval_hours}h)")
+            except Exception:
+                pass
+
     tz = lead["timezone"]
     if not tz:
         return GateResult(False, "unknown lead timezone")

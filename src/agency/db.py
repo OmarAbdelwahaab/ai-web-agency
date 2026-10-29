@@ -72,6 +72,14 @@ CREATE TABLE IF NOT EXISTS clients (
     site_url TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS legal_reviews (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    attorney_name TEXT NOT NULL,
+    law_firm TEXT,
+    notes TEXT,
+    reviewed_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 LEAD_STATUSES = (
@@ -125,3 +133,17 @@ def phone_in_leads(conn: sqlite3.Connection, phone: str | None) -> bool:
         tuple(candidates),
     ).fetchone()
     return row is not None
+
+
+def record_legal_review(conn: sqlite3.Connection, attorney_name: str, law_firm: str = "", notes: str = "") -> int:
+    cur = conn.execute(
+        "INSERT INTO legal_reviews (attorney_name, law_firm, notes) VALUES (?, ?, ?)",
+        (attorney_name.strip(), law_firm.strip(), notes.strip()),
+    )
+    conn.commit()
+    return cur.lastrowid
+
+
+def has_legal_review(conn: sqlite3.Connection) -> bool:
+    row = conn.execute("SELECT COUNT(*) FROM legal_reviews").fetchone()
+    return bool(row and row[0] > 0)

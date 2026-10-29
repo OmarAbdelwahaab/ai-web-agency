@@ -32,8 +32,11 @@ class Settings:
     legal_review_done: bool = field(default_factory=lambda: _bool("LEGAL_REVIEW_DONE"))
     record_calls: bool = field(default_factory=lambda: _bool("RECORD_CALLS"))
     max_attempts: int = field(default_factory=lambda: int(os.environ.get("MAX_ATTEMPTS_PER_LEAD", "2")))
+    daily_call_cap: int = field(default_factory=lambda: int(os.environ.get("DAILY_CALL_CAP", "50")))
+    min_call_interval_hours: int = field(default_factory=lambda: int(os.environ.get("MIN_CALL_INTERVAL_HOURS", "4")))
     window_start: time = field(default_factory=lambda: _time("CALL_WINDOW_START", "08:00"))
     window_end: time = field(default_factory=lambda: _time("CALL_WINDOW_END", "21:00"))
+    log_format: str = field(default_factory=lambda: os.environ.get("LOG_FORMAT", "text"))
 
     places_api_key: str = field(default_factory=lambda: os.environ.get("GOOGLE_PLACES_API_KEY", ""))
     overpass_url: str = field(default_factory=lambda: os.environ.get("OVERPASS_URL", "https://overpass-api.de/api/interpreter"))

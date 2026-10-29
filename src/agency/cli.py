@@ -131,8 +131,37 @@ def cmd_bot(a):
     run_bot(_conn())
 
 
+def cmd_dashboard(a):
+    from agency.reporting import render_dashboard
+
+    print(render_dashboard(_conn()))
+
+
+def cmd_export_csv(a):
+    from agency.reporting import export_all_to_csv, export_table_to_csv
+
+    conn = _conn()
+    if a.table == "all":
+        results = export_all_to_csv(conn, a.output)
+        print("Exported tables to " + str(a.output) + ":")
+        for tbl, cnt in sorted(results.items()):
+            print(f"  {tbl}.csv: {cnt} rows")
+    else:
+        cnt = export_table_to_csv(conn, a.table, a.output)
+        print(f"Exported {cnt} rows from '{a.table}' to {a.output}")
+
+
+def cmd_record_legal_review(a):
+    from agency.db import record_legal_review
+
+    rid = record_legal_review(_conn(), a.attorney, law_firm=a.firm or "", notes=a.notes or "")
+    print(f"Legal review #{rid} recorded for {a.attorney}")
+
+
 def main(argv=None):
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    from agency.logging_config import setup_logging
+
+    setup_logging()
     p = argparse.ArgumentParser(prog="agency")
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -193,6 +222,19 @@ def main(argv=None):
     dn.set_defaults(fn=cmd_dnc_add)
 
     sub.add_parser("telegram-bot").set_defaults(fn=cmd_bot)
+
+    sub.add_parser("dashboard", help="display business metrics, leads, call cap, and gate logs").set_defaults(fn=cmd_dashboard)
+
+    exp = sub.add_parser("export-csv", help="export leads, calls, clients, or gate logs to CSV")
+    exp.add_argument("--table", default="all", help="table name (leads, calls, clients, gate_log, dnc, legal_reviews, or all)")
+    exp.add_argument("--output", required=True, help="output directory (if table=all) or file path (if single table)")
+    exp.set_defaults(fn=cmd_export_csv)
+
+    lr = sub.add_parser("record-legal-review", help="record TCPA compliance attorney review in audit log")
+    lr.add_argument("--attorney", required=True, help="attorney name")
+    lr.add_argument("--firm", default="", help="law firm name")
+    lr.add_argument("--notes", default="", help="notes or scope of review")
+    lr.set_defaults(fn=cmd_record_legal_review)
 
     args = p.parse_args(argv)
     args.fn(args)

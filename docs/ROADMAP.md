@@ -49,7 +49,7 @@ Manual steps: create a SIP provider account, buy/register a US number, create an
 Prompt: "Wire pipeline/post_sale.py end to end with fakes, then with real Telegram. Add idempotency so a repeated deal event cannot create two clients."
 
 ## Phase 7: Hardening and deploy
-- [ ] Structured logging, retries, rate limits, daily call cap
-- [ ] Dockerfile + compose on a small VPS (worker + Telegram bot)
-- [ ] Dashboard view or CSV export of leads, calls, outcomes
-- [ ] Attorney sign-off recorded before `LEGAL_REVIEW_DONE=true`
+- [x] Structured logging, retries, rate limits, daily call cap
+- [x] Dockerfile + compose on a small VPS (worker + Telegram bot)
+- [x] Dashboard view or CSV export of leads, calls, outcomes
+- [x] Attorney sign-off recorded before `LEGAL_REVIEW_DONE=true`

@@ -89,14 +89,26 @@ def test_dispatch_live_safety_switches(dispatch_db):
     res2 = dispatch_call(conn, lid, live=True, settings=s2, now_utc=now_utc)
     assert res2 == {"dispatched": False, "reason": "LEGAL_REVIEW_DONE is false"}
 
-    # 3. SIP_OUTBOUND_TRUNK_ID missing
+    # 3. Attorney sign-off record missing in DB
+    s_no_attorney = Settings(live_dialing_enabled=True, legal_review_done=True, sip_trunk_id="ST_123")
+    res_no_attorney = dispatch_call(conn, lid, live=True, settings=s_no_attorney, now_utc=now_utc)
+    assert res_no_attorney == {"dispatched": False, "reason": "no attorney sign-off recorded in database"}
+
+    # Record sign-off for next checks
+    from agency.db import record_legal_review
+    record_legal_review(conn, "Jane Doe, Esq.", "TCPA Compliance PLLC", "Approved calling script")
+
+    # 4. SIP_OUTBOUND_TRUNK_ID missing
     s3 = Settings(live_dialing_enabled=True, legal_review_done=True, sip_trunk_id="")
     res3 = dispatch_call(conn, lid, live=True, settings=s3, now_utc=now_utc)
     assert res3 == {"dispatched": False, "reason": "SIP_OUTBOUND_TRUNK_ID is not set"}
 
 
 def test_dispatch_live_success(dispatch_db):
+    from agency.db import record_legal_review
+
     conn, lid = dispatch_db
+    record_legal_review(conn, "Jane Doe, Esq.", "TCPA Law", "Full review")
     now_utc = datetime(2026, 6, 15, 18, 0, tzinfo=timezone.utc)
     s = Settings(
         live_dialing_enabled=True,
