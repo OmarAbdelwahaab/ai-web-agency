@@ -24,7 +24,10 @@ voice = [
   "livekit-plugins-cartesia",
   "livekit-plugins-groq",
 ]
-dev = ["pytest>=8.0"]
+dev = [
+  "pytest>=8.0",
+  "graphifyy>=0.9.90",
+]
 
 [project.scripts]
 agency = "agency.cli:main"

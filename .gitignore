@@ -14,6 +14,7 @@ node_modules/
 .playwright/
 .playwright-cli/
 *.exe
+graphify-out/cache/
 # impeccable-ignore-start
 **/.impeccable/config.local.json
 **/.impeccable/hook.cache.json
