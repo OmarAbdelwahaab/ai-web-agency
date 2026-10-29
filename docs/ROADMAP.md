@@ -30,9 +30,9 @@ Prompt: "Polish the site template in src/agency/sitegen/templates. Keep it fast,
 Prompt: "Finish the lead pipeline. Add pagination and cost logging to places.py, dedupe across sources, and implement the optional web-presence check behind SEARCH_API_KEY."
 
 ## Phase 4: Voice agent (terminal only)
-- [ ] `python -m agency.voice.agent console` works with free-tier providers
-- [ ] Opening discloses AI + agency + purpose; opt-out and voicemail paths work
-- [ ] Prices only via `get_price_list`
+- [x] `python -m agency.voice.agent console` works with free-tier providers
+- [x] Opening discloses AI + agency + purpose; opt-out and voicemail paths work
+- [x] Prices only via `get_price_list`
 Prompt: "Read the current LiveKit Agents docs, fix voice/agent.py to match the installed version, and get console mode working. Then write transcript-based tests for opt-out, voicemail, and price questions."
 
 ## Phase 5: Telephony (still dry-run)

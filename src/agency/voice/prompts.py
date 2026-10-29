@@ -26,10 +26,11 @@ def format_price_list(pricing: dict) -> str:
 
 def opening_line(s: Settings, lead) -> str:
     """Always spoken verbatim first. Discloses AI, names the agency, states the purpose."""
+    rec = " This call may be recorded." if s.record_calls else ""
     return (
         f"Hi, this is {s.persona_name}, an AI assistant calling on behalf of {s.agency_name}. "
         f"We help local businesses get a simple website, and I'm calling {lead['name']}. "
-        "Is this a good time for a quick minute?"
+        f"Is this a good time for a quick minute?{rec}"
     )
 
 
