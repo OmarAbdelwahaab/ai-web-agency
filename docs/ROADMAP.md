@@ -37,7 +37,7 @@ Prompt: "Read the current LiveKit Agents docs, fix voice/agent.py to match the i
 
 ## Phase 5: Telephony (still dry-run)
 - [ ] LiveKit Cloud project + SIP outbound trunk configured (manual, see below)
-- [ ] `agency dial --lead-id N` dry-run logs gate decision and the dispatch it would send
+- [x] `agency dial --lead-id N` dry-run logs gate decision and the dispatch it would send
 - [ ] Test call to the owner's own phone only
 Manual steps: create a SIP provider account, buy/register a US number, create an outbound trunk in LiveKit, put `SIP_OUTBOUND_TRUNK_ID` in `.env`.
 

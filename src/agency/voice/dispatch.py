@@ -5,6 +5,7 @@ import asyncio
 import json
 import sqlite3
 import time
+from datetime import datetime
 
 from agency.compliance.gates import can_dial
 from agency.config import Settings, get_settings
@@ -24,12 +25,19 @@ async def _create_dispatch(s: Settings, room: str, metadata: str) -> str:
         await lkapi.aclose()
 
 
-def dispatch_call(conn: sqlite3.Connection, lead_id: int, *, live: bool = False, settings: Settings | None = None) -> dict:
+def dispatch_call(
+    conn: sqlite3.Connection,
+    lead_id: int,
+    *,
+    live: bool = False,
+    settings: Settings | None = None,
+    now_utc: datetime | None = None,
+) -> dict:
     s = settings or get_settings()
     lead = get_lead(conn, lead_id)
     if lead is None:
         return {"dispatched": False, "reason": "lead not found"}
-    gate = can_dial(conn, lead, live=live, settings=s)
+    gate = can_dial(conn, lead, live=live, settings=s, now_utc=now_utc)
     if not gate.allowed:
         return {"dispatched": False, "reason": gate.reason}
     room = f"call-{lead_id}-{int(time.time())}"
