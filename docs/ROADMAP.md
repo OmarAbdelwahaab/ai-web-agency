@@ -3,13 +3,13 @@
 Each phase has a paste-ready prompt for Antigravity. Always say: "Follow AGENTS.md and the rules in .agents/rules."
 
 ## Phase 0: Environment
-- [ ] venv created, `pip install -e ".[voice,dev]"` works, `pytest -q` passes
-- [ ] `.env` created from `.env.example`
+- [x] venv created, `pip install -e ".[voice,dev]"` works, `pytest -q` passes
+- [x] `.env` created from `.env.example`
 Prompt: "Set up the dev environment, pin working dependency versions in pyproject.toml, and make sure pytest passes. Do not write feature code yet."
 
 ## Phase 1: Core (config, DB, compliance gates)
-- [ ] `config.py`, `db.py`, `compliance/gates.py` reviewed and fully tested
-- [ ] `agency init-db` creates all tables
+- [x] `config.py`, `db.py`, `compliance/gates.py` reviewed and fully tested
+- [x] `agency init-db` creates all tables
 Prompt: "Review src/agency/config.py, db.py and compliance/gates.py. Add edge-case tests for time zones around midnight and DST, DNC matching with different phone formats, and attempt limits."
 
 ## Phase 2: Site generator (can be finished with no phone or API at all)

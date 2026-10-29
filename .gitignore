@@ -2,6 +2,7 @@
 .env.local
 *.db
 *.sqlite3
+*.egg-info/
 __pycache__/
 .venv/
 output/*
