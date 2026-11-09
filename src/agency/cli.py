@@ -16,6 +16,16 @@ def _conn():
     return conn
 
 
+def _auto_export_leads(conn, target: Path | str | None = None) -> None:
+    """Automatically export all leads (any status) to CSV."""
+    from agency.reporting import export_table_to_csv
+
+    s = get_settings()
+    out = Path(target) if target else s.leads_csv_path
+    cnt = export_table_to_csv(conn, "leads", out)
+    print(f"Auto-exported {cnt} total leads to {out}")
+
+
 def cmd_init_db(a):
     _conn()
     print("database ready")
@@ -28,11 +38,17 @@ def cmd_find_leads(a):
 
         found = places.search(f"{a.query} in {a.city}", limit=a.limit)
         print(f"{len(found)} places found, {places.save(conn, found, category=a.query)} new candidates saved")
+    elif a.source == "geoapify":
+        from agency.leads import geoapify
+
+        found = geoapify.search(a.query, a.city, limit=a.limit)
+        print(f"{len(found)} places found, {geoapify.save(conn, found, category=a.query)} new candidates saved")
     else:
         from agency.leads import osm
 
         found = osm.search(a.query, a.city)
         print(f"{len(found)} elements found, {osm.save(conn, found, a.query)} new candidates saved")
+    _auto_export_leads(conn, getattr(a, "export_csv", None))
 
 
 def cmd_verify(a):
@@ -41,6 +57,7 @@ def cmd_verify(a):
     conn = _conn()
     print("verify:", verify_all(conn, a.limit))
     print("scrub:", scrub_all(conn))
+    _auto_export_leads(conn)
 
 
 def cmd_add_lead(a):
@@ -58,6 +75,7 @@ def cmd_add_lead(a):
         address=a.address, website_checked=0,
     )
     print(f"lead id {lid}" if lid else "lead already exists")
+    _auto_export_leads(conn)
 
 
 def cmd_preview(a):
@@ -92,8 +110,10 @@ def cmd_demo_site(a):
 def cmd_import_csv(a):
     from agency.leads.csv_import import import_csv
 
-    print(import_csv(_conn(), a.file, default_lat=a.lat, default_lng=a.lng, default_city=a.city,
+    conn = _conn()
+    print(import_csv(conn, a.file, default_lat=a.lat, default_lng=a.lng, default_city=a.city,
                      default_state=a.state, source=a.source_label))
+    _auto_export_leads(conn)
 
 
 def cmd_qa_site(a):
@@ -168,10 +188,11 @@ def main(argv=None):
     sub.add_parser("init-db").set_defaults(fn=cmd_init_db)
 
     f = sub.add_parser("find-leads")
-    f.add_argument("--source", choices=["places", "osm"], default="places")
+    f.add_argument("--source", choices=["places", "osm", "geoapify"], default="places")
     f.add_argument("--query", required=True, help="places: free text like 'plumber'; osm: restaurant|pharmacy|plumber|electrician|hairdresser|hardware")
     f.add_argument("--city", required=True, help="places: 'Austin, TX'; osm: exact area name like 'Austin'")
     f.add_argument("--limit", type=int, default=40)
+    f.add_argument("--export-csv", default=None, help="custom CSV export destination (defaults to LEADS_CSV_PATH or leads.csv)")
     f.set_defaults(fn=cmd_find_leads)
 
     v = sub.add_parser("verify", help="normalize, qualify, and scrub new leads")

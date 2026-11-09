@@ -257,3 +257,27 @@ def test_cli_dashboard_and_export(sample_lead, monkeypatch, capsys, tmp_path):
     out_exp = capsys.readouterr().out
     assert "Exported tables to" in out_exp
     assert (export_dir / "leads.csv").exists()
+
+
+def test_cli_auto_export_leads(sample_lead, monkeypatch, capsys, tmp_path):
+    from agency.cli import main
+
+    conn, _ = sample_lead
+    monkeypatch.setattr("agency.cli._conn", lambda: conn)
+
+    auto_csv = tmp_path / "auto_leads.csv"
+    mock_settings = Settings(leads_csv_path=auto_csv)
+    monkeypatch.setattr("agency.cli.get_settings", lambda: mock_settings)
+
+    # Test add-lead triggers auto-export
+    main(["add-lead", "--name", "Auto Plumbing", "--phone", "+15125550188", "--lat", "30.27", "--lng", "-97.74"])
+    out = capsys.readouterr().out
+    assert "Auto-exported 2 total leads to" in out
+    assert auto_csv.exists()
+
+    with open(auto_csv, newline="", encoding="utf-8") as f:
+        reader = list(csv.reader(f))
+        assert len(reader) == 3  # Header + 2 leads
+        names = [r[3] for r in reader[1:]]
+        assert "Hardened Tech Support" in names
+        assert "Auto Plumbing" in names

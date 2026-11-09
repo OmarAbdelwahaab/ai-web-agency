@@ -1,5 +1,7 @@
 .env
 .env.local
+leads.csv
+.obsidian/
 *.db
 *.sqlite3
 *.egg-info/
