@@ -234,6 +234,124 @@ def cmd_brief(a):
     print(f"  Markdown: {md_p}")
 
 
+def cmd_compare(a):
+    from agency.sitegen.compare import compare_lead
+
+    s = get_settings()
+    conn = _conn()
+    res = compare_lead(conn, a.lead_id, settings=s)
+    print(f"A/B Comparison generated for '{res['business_name']}' (#{a.lead_id}):")
+    print(f"  Comparison view: {res['compare_html']}")
+    print(f"  Blind mapping: {res['mapping_path']} (hidden from comparison page)")
+    print(f"  Variant A QA: {res['variant_a_qa']['summary']}")
+    print(f"  Variant B QA: {res['variant_b_qa']['summary']}")
+    if res.get("screenshot_a"):
+        print(f"  Screenshot A: {res['screenshot_a']}")
+    if res.get("screenshot_b"):
+        print(f"  Screenshot B: {res['screenshot_b']}")
+
+
+def cmd_score(a):
+    from agency.db import get_lead, record_design_score
+    from agency.sitegen.compare import VALID_CRITERIA, get_or_create_mapping, resolve_site_label
+    from agency.sitegen.schema import slugify
+
+    crit = a.criterion.lower()
+    if crit not in VALID_CRITERIA:
+        sys.exit(f"error: invalid criterion '{a.criterion}'. Choose from: {', '.join(VALID_CRITERIA)}")
+    if a.score < 1 or a.score > 5:
+        sys.exit("error: score must be between 1 and 5")
+
+    s = get_settings()
+    conn = _conn()
+    lead = get_lead(conn, a.lead_id)
+    if not lead:
+        sys.exit(f"error: lead #{a.lead_id} not found")
+
+    slug = slugify(lead["name"], lead["id"])
+    variants_dir = s.output_dir / slug / "variants"
+    mapping = get_or_create_mapping(variants_dir)
+
+    variant = resolve_site_label(a.site_label, mapping)
+    sid = record_design_score(conn, a.lead_id, variant, crit, a.score, reviewer=a.reviewer)
+
+    print(f"Recorded score #{sid} for Lead #{a.lead_id}:")
+    print(f"  Candidate: {a.site_label}")
+    print(f"  Criterion: {crit}")
+    print(f"  Score: {a.score}/5")
+    print(f"  Reviewer: {a.reviewer}")
+
+
+def cmd_reveal(a):
+    from agency.db import get_design_scores, get_lead
+    from agency.sitegen.compare import get_or_create_mapping
+    from agency.sitegen.schema import slugify
+
+    s = get_settings()
+    conn = _conn()
+    lead = get_lead(conn, a.lead_id)
+    if not lead:
+        sys.exit(f"error: lead #{a.lead_id} not found")
+
+    slug = slugify(lead["name"], lead["id"])
+    variants_dir = s.output_dir / slug / "variants"
+    mapping_file = variants_dir / "mapping.json"
+    if not mapping_file.exists():
+        sys.exit(f"error: no mapping found at {mapping_file}. Run `agency compare {a.lead_id}` first.")
+
+    mapping = get_or_create_mapping(variants_dir)
+    scores = get_design_scores(conn, a.lead_id)
+
+    path_names = {"a": "Path A (impeccable)", "b": "Path B (open-design)"}
+    print(f"Blind Mapping Revealed for Lead #{a.lead_id} ({lead['name']}):")
+    print(f"  Site 1 -> {path_names.get(mapping['site_1'], mapping['site_1'])}")
+    print(f"  Site 2 -> {path_names.get(mapping['site_2'], mapping['site_2'])}")
+
+    if scores:
+        print("\nRecorded Scores:")
+        for sc in scores:
+            path = path_names.get(sc["variant"], sc["variant"])
+            print(f"  - [{path}] {sc['criterion']}: {sc['score']}/5 (by {sc['reviewer']})")
+
+
+def cmd_compare_report(a):
+    from agency.sitegen.compare import compute_ab_report, export_report_to_csv
+
+    s = get_settings()
+    conn = _conn()
+    report = compute_ab_report(conn, s.output_dir)
+
+    print("=" * 65)
+    print("A/B DESIGN PATH COMPARISON REPORT")
+    print("=" * 65)
+
+    print("\n--- Summary ---")
+    print(f"Total Leads Evaluated: {len(report['lead_results'])}")
+    print(f"Path A Wins: {report['a_wins']}")
+    print(f"Path B Wins: {report['b_wins']}")
+    print(f"Ties: {report['ties']}")
+
+    print("\n--- Criteria Averages (1-5) ---")
+    print(f"{'Criterion':<20} | {'Path A (impeccable)':<20} | {'Path B (open-design)':<20}")
+    print("-" * 65)
+    for crit, avgs in report["criterion_averages"].items():
+        print(f"{crit:<20} | {avgs['a']:<20.2f} | {avgs['b']:<20.2f}")
+
+    print("\n--- Build & Quality Metrics ---")
+    stats = report["build_stats"]
+    print(f"QA First-Try Pass Rate:  Path A: {stats['a']['qa_first_try_pass_rate'] * 100:.1f}%  |  Path B: {stats['b']['qa_first_try_pass_rate'] * 100:.1f}%")
+    print(f"Avg Duration (sec):       Path A: {stats['a']['avg_duration_seconds']:.1f}s   |  Path B: {stats['b']['avg_duration_seconds']:.1f}s")
+    print(f"Avg Iterations:           Path A: {stats['a']['avg_iterations']:.1f}     |  Path B: {stats['b']['avg_iterations']:.1f}")
+
+    print("\n--- Final Verdict ---")
+    print(f">> {report['verdict']} <<\n")
+
+    if a.output:
+        cnt = export_report_to_csv(report, a.output)
+        print(f"Exported {cnt} lead comparison rows to {a.output}")
+
+
+
 
 
 def main(argv=None):
@@ -328,6 +446,26 @@ def main(argv=None):
     bf = sub.add_parser("brief", help="generate output/<slug>/brief.json and brief.md for custom site design")
     bf.add_argument("lead_id", type=int, help="lead id to generate design brief for")
     bf.set_defaults(fn=cmd_brief)
+
+    cmp_p = sub.add_parser("compare", help="run QA and generate side-by-side A/B comparison page for a lead")
+    cmp_p.add_argument("lead_id", type=int, help="lead id to compare")
+    cmp_p.set_defaults(fn=cmd_compare)
+
+    sc_p = sub.add_parser("score", help="record a 1-5 score for Site 1 or Site 2 on a specific criterion")
+    sc_p.add_argument("lead_id", type=int, help="lead id")
+    sc_p.add_argument("site_label", help="candidate label ('Site 1' or 'Site 2')")
+    sc_p.add_argument("criterion", help="evaluation criterion (e.g. first_impression, layout_fit, etc.)")
+    sc_p.add_argument("score", type=int, help="score from 1 to 5")
+    sc_p.add_argument("--reviewer", default="owner", help="name or initials of reviewer")
+    sc_p.set_defaults(fn=cmd_score)
+
+    rev_p = sub.add_parser("reveal", help="reveal blind mapping between Site 1/Site 2 and Path A/Path B")
+    rev_p.add_argument("lead_id", type=int, help="lead id to reveal")
+    rev_p.set_defaults(fn=cmd_reveal)
+
+    rep_p = sub.add_parser("compare-report", help="aggregate A/B comparison scores, QA pass rates, and compute verdict")
+    rep_p.add_argument("--output", default=None, help="optional CSV export destination")
+    rep_p.set_defaults(fn=cmd_compare_report)
 
     args = p.parse_args(argv)
     args.fn(args)

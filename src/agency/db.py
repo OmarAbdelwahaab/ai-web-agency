@@ -97,6 +97,17 @@ CREATE TABLE IF NOT EXISTS lead_enrichment (
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_enrichment_lead ON lead_enrichment(lead_id);
+
+CREATE TABLE IF NOT EXISTS design_scores (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    lead_id INTEGER NOT NULL REFERENCES leads(id),
+    variant TEXT NOT NULL,
+    criterion TEXT NOT NULL,
+    score INTEGER NOT NULL CHECK (score >= 1 AND score <= 5),
+    reviewer TEXT NOT NULL DEFAULT 'owner',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_design_scores_lead ON design_scores(lead_id);
 """
 
 LEAD_STATUSES = (
@@ -250,4 +261,37 @@ def add_owner_note(conn: sqlite3.Connection, lead_id: int, notes: str) -> None:
         (note_text, note_text, lead_id),
     )
     conn.commit()
+
+
+def record_design_score(
+    conn: sqlite3.Connection,
+    lead_id: int,
+    variant: str,
+    criterion: str,
+    score: int,
+    reviewer: str = "owner",
+) -> int:
+    """Record a 1-5 design score for a specific variant and criterion."""
+    if score < 1 or score > 5:
+        raise ValueError(f"Score must be between 1 and 5 (got {score})")
+    cur = conn.execute(
+        """
+        INSERT INTO design_scores (lead_id, variant, criterion, score, reviewer, created_at)
+        VALUES (?, ?, ?, ?, ?, datetime('now'))
+        """,
+        (lead_id, variant.lower(), criterion.lower(), score, reviewer),
+    )
+    conn.commit()
+    return cur.lastrowid
+
+
+def get_design_scores(conn: sqlite3.Connection, lead_id: int | None = None) -> list[sqlite3.Row]:
+    """Retrieve design scores, optionally filtered by lead_id."""
+    if lead_id is not None:
+        return conn.execute(
+            "SELECT * FROM design_scores WHERE lead_id = ? ORDER BY id ASC",
+            (lead_id,),
+        ).fetchall()
+    return conn.execute("SELECT * FROM design_scores ORDER BY id ASC").fetchall()
+
 
