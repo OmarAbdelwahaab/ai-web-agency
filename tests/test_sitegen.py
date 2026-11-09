@@ -15,7 +15,9 @@ from agency.sitegen.schema import (
     HoursRow,
     Service,
     SiteConfig,
+    clean_address,
     config_from_lead,
+    parse_hours,
     slugify,
     theme_for_category,
 )
@@ -136,8 +138,69 @@ def test_config_from_lead():
     assert config.phone_e164 == "+15125550188"
     assert len(config.hours) == 2
     assert config.hours[0].day == "Mon"
-    assert config.hours[0].text == "8-5"
+    assert config.hours[0].text == "8:00 AM – 5:00 PM"
     assert config.credit == "Made by Agency"
+    assert config.used_fallback is True
+    assert "Star Auto" in (config.about or "")
+
+
+def test_clean_address():
+    assert clean_address(None) is None
+    assert clean_address("") is None
+
+    # Country suffix removal
+    assert clean_address("221 West 6th Street, Austin, TX 78701, United States of America") == "221 West 6th Street, Austin, TX 78701"
+    assert clean_address("1200 Example St, Austin, TX 78701, USA") == "1200 Example St, Austin, TX 78701"
+    assert clean_address("500 1st St, Austin, TX, US") == "500 1st St, Austin, TX"
+    assert clean_address("705 Colorado Street, Austin, TX 78701, United States") == "705 Colorado Street, Austin, TX 78701"
+
+    # Business name prefix removal
+    assert clean_address("Thistle Cafe, 221 West 6th Street, Austin, TX 78701", "Thistle Cafe") == "221 West 6th Street, Austin, TX 78701"
+    assert clean_address("Lone Star Plumbing, 1200 Example St, Austin, TX 78701, USA", "Lone Star Plumbing") == "1200 Example St, Austin, TX 78701"
+
+
+def test_parse_hours_formats():
+    # 1. OSM range with 24h times
+    h1 = parse_hours('["Mo-Fr 07:30-14:30"]')
+    assert len(h1) == 1
+    assert h1[0].day == "Mon–Fri"
+    assert h1[0].text == "7:30 AM – 2:30 PM"
+
+    # 2. OSM comma-separated days
+    h2 = parse_hours('["Sa,Su 08:00-12:00"]')
+    assert len(h2) == 1
+    assert h2[0].day == "Sat, Sun"
+    assert h2[0].text == "8:00 AM – 12:00 PM"
+
+    # 3. 24/7
+    h3 = parse_hours('["24/7"]')
+    assert len(h3) == 1
+    assert h3[0].day == "Mon–Sun"
+    assert h3[0].text == "Open 24/7"
+
+    # 4. Public holidays off
+    h4 = parse_hours('["PH off"]')
+    assert len(h4) == 1
+    assert h4[0].day == "Public Holidays"
+    assert h4[0].text == "Closed"
+
+    # 5. Multi-rule semicolon separated
+    h5 = parse_hours('["Mo-Fr 07:30-14:30; Sa 08:00-12:00"]')
+    assert len(h5) == 2
+    assert h5[0].day == "Mon–Fri"
+    assert h5[0].text == "7:30 AM – 2:30 PM"
+    assert h5[1].day == "Sat"
+    assert h5[1].text == "8:00 AM – 12:00 PM"
+
+    # 6. Google-style format
+    h6 = parse_hours('["Monday: 9:00 AM – 5:00 PM", "Tuesday: 9:00 AM – 5:00 PM"]')
+    assert len(h6) == 2
+    assert h6[0].day == "Monday"
+    assert h6[0].text == "9:00 AM – 5:00 PM"
+
+    # 7. Unparseable/garbage strings dropped cleanly
+    h7 = parse_hours('["Random corrupted text", "123:456", "lone number 7"]')
+    assert h7 == []
 
 
 # --- AI Fill Tests ---
@@ -161,6 +224,7 @@ def test_fill_config_no_api_key():
     cfg = fill_config(lead, call_notes="owner likes fast work", settings=settings)
     assert cfg.business_name == "Main Plumbers"
     assert cfg.tagline == "Serving Austin"
+    assert cfg.used_fallback is True
 
 
 def test_fill_config_valid_llm_response():
@@ -184,6 +248,7 @@ def test_fill_config_valid_llm_response():
     assert len(cfg.services) == 1
     assert cfg.services[0].name == "Drain Snaking"
     assert cfg.services[0].price == "$120"
+    assert cfg.used_fallback is False
 
 
 def test_fill_config_llm_retry_and_fallback():
@@ -196,6 +261,7 @@ def test_fill_config_llm_retry_and_fallback():
 
     cfg = fill_config(lead, call_notes="notes", client=mock_client)
     assert cfg.tagline == "Serving Austin"  # deterministic fallback
+    assert cfg.used_fallback is True
 
 
 def test_fill_config_llm_exception_fallback():
