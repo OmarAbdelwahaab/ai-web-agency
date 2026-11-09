@@ -220,6 +220,21 @@ def cmd_note_lead(a):
     print(f"  Status: {'QUALIFIED for agent-built site' if qualifies else 'Template fallback'}")
 
 
+def cmd_brief(a):
+    from agency.sitegen.brief import generate_brief
+
+    s = get_settings()
+    conn = _conn()
+    brief_data, json_p, md_p = generate_brief(conn, a.lead_id, settings=s)
+    print(f"Generated design brief for '{brief_data['business_name']}' (#{a.lead_id}):")
+    print(f"  Slug: {brief_data['slug']}")
+    print(f"  Theme: {brief_data['theme']} ({brief_data['category']})")
+    print(f"  Data richness: {brief_data['data_richness']:.2f}")
+    print(f"  JSON: {json_p}")
+    print(f"  Markdown: {md_p}")
+
+
+
 
 def main(argv=None):
     from agency.logging_config import setup_logging
@@ -309,6 +324,10 @@ def main(argv=None):
     nl.add_argument("note", nargs="?", default=None, help="note text")
     nl.add_argument("--notes", dest="flag_note", default=None, help="note text (alternative to positional argument)")
     nl.set_defaults(fn=cmd_note_lead)
+
+    bf = sub.add_parser("brief", help="generate output/<slug>/brief.json and brief.md for custom site design")
+    bf.add_argument("lead_id", type=int, help="lead id to generate design brief for")
+    bf.set_defaults(fn=cmd_brief)
 
     args = p.parse_args(argv)
     args.fn(args)
