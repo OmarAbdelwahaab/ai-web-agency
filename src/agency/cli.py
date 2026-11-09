@@ -178,6 +178,49 @@ def cmd_record_legal_review(a):
     print(f"Legal review #{rid} recorded for {a.attorney}")
 
 
+def cmd_enrich(a):
+    from agency.enrichment import enrich_lead, is_rich_lead
+    from agency.enrichment.images import LocalAssetSource
+
+    s = get_settings()
+    conn = _conn()
+    enrichment = enrich_lead(conn, a.lead_id, settings=s)
+    lead = get_lead(conn, a.lead_id)
+    local_imgs = LocalAssetSource(s.assets_dir).get_images(a.lead_id)
+    qualifies = is_rich_lead(enrichment.data_richness, s.richness_threshold)
+
+    print(f"Enriched Lead #{a.lead_id}: {lead['name'] if lead else 'Unknown'}")
+    print(f"  Rating: {enrichment.rating or 'N/A'} ({enrichment.review_count or 0} reviews)")
+    print(f"  Top review snippets: {len(enrichment.top_reviews)}")
+    print(f"  Categories: {', '.join(enrichment.categories) if enrichment.categories else 'None'}")
+    print(f"  Photo references: {len(enrichment.photo_refs)}")
+    print(f"  Local owner images: {len(local_imgs)}")
+    print(f"  Website absent: {'Yes' if enrichment.website_confirmed_none else 'No'}")
+    if enrichment.owner_notes:
+        print(f"  Owner notes: {enrichment.owner_notes.strip()}")
+    print(f"  Data richness score: {enrichment.data_richness:.2f} (Threshold: {s.richness_threshold:.2f})")
+    print(f"  Status: {'QUALIFIED for agent-built site' if qualifies else 'Template fallback'}")
+
+
+def cmd_note_lead(a):
+    from agency.enrichment import is_rich_lead, record_owner_note
+
+    note_text = (a.note or a.flag_note or "").strip()
+    if not note_text:
+        sys.exit("error: note text is required")
+
+    s = get_settings()
+    conn = _conn()
+    enrichment = record_owner_note(conn, a.lead_id, note_text, settings=s)
+    qualifies = is_rich_lead(enrichment.data_richness, s.richness_threshold)
+
+    print(f"Recorded owner note for Lead #{a.lead_id}:")
+    print(f"  Note: {note_text}")
+    print(f"  Updated data richness score: {enrichment.data_richness:.2f} (Threshold: {s.richness_threshold:.2f})")
+    print(f"  Status: {'QUALIFIED for agent-built site' if qualifies else 'Template fallback'}")
+
+
+
 def main(argv=None):
     from agency.logging_config import setup_logging
 
@@ -256,6 +299,16 @@ def main(argv=None):
     lr.add_argument("--firm", default="", help="law firm name")
     lr.add_argument("--notes", default="", help="notes or scope of review")
     lr.set_defaults(fn=cmd_record_legal_review)
+
+    en = sub.add_parser("enrich", help="enrich a lead with Google Places details, reviews, and local photos")
+    en.add_argument("lead_id", type=int, help="lead id to enrich")
+    en.set_defaults(fn=cmd_enrich)
+
+    nl = sub.add_parser("note-lead", help="record call notes for a lead to increase data richness")
+    nl.add_argument("lead_id", type=int, help="lead id to annotate")
+    nl.add_argument("note", nargs="?", default=None, help="note text")
+    nl.add_argument("--notes", dest="flag_note", default=None, help="note text (alternative to positional argument)")
+    nl.set_defaults(fn=cmd_note_lead)
 
     args = p.parse_args(argv)
     args.fn(args)

@@ -1,17 +1,17 @@
-# Graph Report - ai-web-agency  (2026-11-08)
+# Graph Report - ai-web-agency  (2026-11-09)
 
 ## Corpus Check
-- 195 files · ~311,294 words
+- 203 files · ~315,758 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 19 file(s) not represented in the graph (top: (none) 9, .toml 4, .cmd 2)
+- Unclassified: 18 file(s) not represented in the graph (top: (none) 9, .toml 4, .cmd 2)
 
 ## Summary
-- 3227 nodes · 7163 edges · 175 communities (163 shown, 12 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 266 edges (avg confidence: 0.88)
+- 3314 nodes · 7434 edges · 172 communities (160 shown, 12 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 292 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `362ecb40`
+- Built from commit: `6a5f03b0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,22 +27,22 @@
 - el
 - .claude/skills/impeccable/scripts/modern-screenshot.umd.js
 - insert_lead
-- get_lead
+- db.py
 - test_sitegen.py
 - syncPageChatFocus
 - syncPageChatFocus
-- get_settings
+- post_sale.py
 - cli.py
 - db.py
-- normalizeManualContextText
+- documentRefForElement
 - documentRefForElement
 - Cookies
-- mountSvelteComponentVariant
+- showToast
 - showToast
 - Settings
 - .agents/skills/impeccable/reference/new-work.md
 - .claude/skills/impeccable/reference/new-work.md
-- test_post_sale.py
+- get_lead
 - .agents/skills/impeccable/SKILL.md
 - .agents/skills/impeccable/reference/live.md
 - .claude/skills/impeccable/SKILL.md
@@ -83,7 +83,7 @@
 - Generate Report
 - onAnnotDown
 - Browser Automation with playwright-cli
-- config.py
+- test_hardening.py
 - New visual work
 - .agents/skills/impeccable/reference/optimize.md
 - New visual work
@@ -109,13 +109,13 @@
 - scheduleAcceptCleanup
 - .claude/skills/impeccable/reference/clarify.md
 - Nielsen's 10 Heuristics
-- .claude/skills/impeccable/reference/document.md
+- qa.py
 - .claude/skills/impeccable/reference/polish.md
 - .claude/skills/impeccable/reference/quieter.md
 - scheduleAcceptCleanup
 - packages
 - Init flow
-- retry
+- .claude/skills/impeccable/reference/document.md
 - Generate Combined Critique Report
 - Init flow
 - Video Recording
@@ -129,12 +129,12 @@
 - iOS platform
 - Operate mode depth (and Read notes)
 - Shape
-- .agents/skills/impeccable/reference/adapt.native.md
+- onAnnotDown
 - Android platform
-- .agents/skills/impeccable/reference/colorize.md
+- .agents/skills/impeccable/reference/generate.md
 - Persona-Based Design Testing
 - Extract Flow
-- .claude/skills/impeccable/reference/colorize.md
+- .claude/skills/impeccable/reference/generate.md
 - Android platform
 - .claude/skills/impeccable/reference/bolder.md
 - Persona-Based Design Testing
@@ -155,46 +155,43 @@
 - Call script and guardrails
 - AI Web Agency
 - Diagnostic Scan
-- .agents/skills/impeccable/reference/bolder.md
+- .agents/skills/impeccable/reference/adapt.native.md
 - Diagnostic Scan
 - Attaching Screenshots and Videos to Pull Requests
-- DESIGN.md
+- .agents/skills/impeccable/reference/doctor.md
 - Skills and tools: what we use, what we skip, and why
 - interface
 - Impeccable Documenter
-- Region map
+- .agents/skills/impeccable/reference/bolder.md
 - Impeccable Documenter
-- Impeccable Documenter
-- Region map
-- enableInlineEdit
+- .claude/skills/impeccable/reference/doctor.md
+- Visualize: Direction Comps & Asset Production
+- Persuade and Experience
 - Advanced Mocking with run-code
 - 2. Generate
-- dispatch_call
+- Persuade and Experience
 - Compliance checklist
 - Heuristics Scoring Guide
-- Operate
-- Read
+- DESIGN.md
+- Impeccable Documenter
 - Heuristics Scoring Guide
-- Architecture
-- Read
 - setup_skills.sh
 - code-style.md
 - design.md
 - ai-web-agency
 - Visualize: Direction Comps & Asset Production
 - CLAUDE.md - AI Web Agency Guidelines
-- Operate
 
 ## God Nodes (most connected - your core abstractions)
-1. `Settings` - 85 edges
-2. `get_settings()` - 40 edges
+1. `Settings` - 92 edges
+2. `get_settings()` - 51 edges
 3. `connectSSE()` - 34 edges
 4. `connectSSE()` - 34 edges
 5. `setLiveState()` - 33 edges
 6. `resumeSession()` - 33 edges
 7. `setLiveState()` - 33 edges
 8. `resumeSession()` - 33 edges
-9. `showToast()` - 31 edges
+9. `get_lead()` - 32 edges
 10. `showToast()` - 31 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -212,35 +209,35 @@
 ## Import Cycles
 - None detected.
 
-## Communities (175 total, 12 thin omitted)
+## Communities (172 total, 12 thin omitted)
 
 ### Community 0 - ".agents/skills/impeccable/scripts/live-browser.js"
 Cohesion: 0.03
-Nodes (138): applyGlobalBarLabelState(), applyLiveBarPreference(), applyParamDefaults(), applyParamValue(), applyPlaceholderSizingStyles(), applySavedParamValues(), bindEditBadgeProxy(), bufferToBase64() (+130 more)
+Nodes (139): applyGlobalBarLabelState(), applyLiveBarPreference(), applyParamDefaults(), applyParamValue(), applyPlaceholderSizingStyles(), applySavedParamValues(), bindEditBadgeProxy(), bufferToBase64() (+131 more)
 
 ### Community 1 - ".claude/skills/impeccable/scripts/live-browser.js"
 Cohesion: 0.03
 Nodes (139): applyGlobalBarLabelState(), applyLiveBarPreference(), applyParamDefaults(), applyParamValue(), applyPlaceholderSizingStyles(), applySavedParamValues(), bindEditBadgeProxy(), bufferToBase64() (+131 more)
 
 ### Community 2 - "connectSSE"
-Cohesion: 0.05
-Nodes (96): abandonForeignSession(), abandonSupersededGo(), applyPlaceholderDimensions(), applySavedSessionMeta(), buildParamsPanel(), captureAndEmit(), checkpointPayload(), clampVariantIndex() (+88 more)
+Cohesion: 0.06
+Nodes (83): applyPlaceholderDimensions(), applySavedSessionMeta(), buildParamsPanel(), checkpointPayload(), clampVariantIndex(), closedClipPath(), commitAcceptedVariantToDom(), completeParameterGenerationIfReady() (+75 more)
 
 ### Community 3 - "connectSSE"
 Cohesion: 0.06
 Nodes (83): applyPlaceholderDimensions(), applySavedSessionMeta(), buildParamsPanel(), checkpointPayload(), clampVariantIndex(), closedClipPath(), commitAcceptedVariantToDom(), completeParameterGenerationIfReady() (+75 more)
 
 ### Community 4 - "setLiveState"
-Cohesion: 0.10
-Nodes (65): abortSvelteComponentInjection(), applyEditing(), beginNewLiveConfiguration(), buildInsertPlaceholderSnapshotFromDom(), buildLocatorForLeaf(), cancelEditing(), cancelEditingToPicking(), cancelInsertConfigure() (+57 more)
+Cohesion: 0.09
+Nodes (67): abortSvelteComponentInjection(), applyEditing(), beginNewLiveConfiguration(), buildLocatorForLeaf(), cancelEditing(), cancelEditingToPicking(), cancelInsertConfigure(), cleanup() (+59 more)
 
 ### Community 5 - "setLiveState"
 Cohesion: 0.09
 Nodes (67): abortSvelteComponentInjection(), applyEditing(), beginNewLiveConfiguration(), buildLocatorForLeaf(), cancelEditing(), cancelEditingToPicking(), cancelInsertConfigure(), cleanup() (+59 more)
 
 ### Community 6 - "el"
-Cohesion: 0.08
-Nodes (54): actionLabel(), applyConfigureBarChrome(), bindConfigureCountPillTooltip(), bindConfigureInlineControlHover(), bindConfigureModifierPillHover(), buildConfigureActionControl(), buildConfigureCountControl(), buildConfigureRow() (+46 more)
+Cohesion: 0.07
+Nodes (57): actionLabel(), applyConfigureBarChrome(), bindConfigureCountPillTooltip(), bindConfigureInlineControlHover(), bindConfigureModifierPillHover(), buildConfigureActionControl(), buildConfigureCountControl(), buildConfigureRow() (+49 more)
 
 ### Community 7 - ".agents/skills/impeccable/scripts/modern-screenshot.umd.js"
 Cohesion: 0.09
@@ -255,40 +252,40 @@ Cohesion: 0.09
 Nodes (53): ae(), be(), bt(), Ce(), Ct(), de(), dt(), _e() (+45 more)
 
 ### Community 10 - "insert_lead"
-Cohesion: 0.07
-Nodes (27): connect(), get_lead(), init_db(), insert_lead(), entrypoint(), _test_lead(), build_system_prompt(), opening_line() (+19 more)
+Cohesion: 0.06
+Nodes (32): _bool(), _time(), connect(), init_db(), entrypoint(), CallTools, env(), test_clients_unique_lead_constraint() (+24 more)
 
-### Community 11 - "get_lead"
-Cohesion: 0.10
-Nodes (14): _build_session(), test_build_session_none_providers(), _create(), test_build_session_openai_providers(), _create(), test_build_session_unsupported_providers(), test_opening_disclosure_rules(), test_transcript_callback_flow() (+6 more)
+### Community 11 - "db.py"
+Cohesion: 0.07
+Nodes (24): record_legal_review(), _build_session(), _create_dispatch(), dispatch_call(), test_build_session_none_providers(), _create(), test_build_session_openai_providers(), _create() (+16 more)
 
 ### Community 12 - "test_sitegen.py"
-Cohesion: 0.08
-Nodes (28): cmd_demo_site(), save(), fill_config(), _env(), render_site(), AIText, config_from_lead(), _hours_rows() (+20 more)
+Cohesion: 0.06
+Nodes (39): cmd_demo_site(), pretty_us(), fill_config(), deploy_pages(), _env(), render_site(), AIText, clean_address() (+31 more)
 
 ### Community 13 - "syncPageChatFocus"
-Cohesion: 0.08
-Nodes (51): armPageChatForTyping(), attachSteerFocusDebug(), attachSteerFocusGuard(), buildSteerProcessingDots(), buildSteerQueueHint(), clearSteerAwaitTimer(), clearSteerFocusRecoverTimer(), collapsePageChat() (+43 more)
+Cohesion: 0.09
+Nodes (49): armPageChatForTyping(), attachSteerFocusDebug(), attachSteerFocusGuard(), buildSteerProcessingDots(), buildSteerQueueHint(), clearSteerAwaitTimer(), clearSteerFocusRecoverTimer(), collapsePageChat() (+41 more)
 
 ### Community 14 - "syncPageChatFocus"
 Cohesion: 0.09
 Nodes (49): armPageChatForTyping(), attachSteerFocusDebug(), attachSteerFocusGuard(), buildSteerProcessingDots(), buildSteerQueueHint(), clearSteerAwaitTimer(), clearSteerFocusRecoverTimer(), collapsePageChat() (+41 more)
 
-### Community 15 - "get_settings"
+### Community 15 - "post_sale.py"
 Cohesion: 0.07
-Nodes (27): Data flow, cmd_qa_site(), get_settings(), build_query(), search(), email_configured(), send_site_link(), _api() (+19 more)
+Nodes (23): Architecture, Data flow, External services, Key design decisions, Tables (SQLite), email_configured(), send_site_link(), _api() (+15 more)
 
 ### Community 16 - "cli.py"
-Cohesion: 0.11
-Nodes (28): _auto_export_leads(), cmd_add_lead(), cmd_bot(), cmd_dashboard(), cmd_dial(), cmd_dnc_add(), cmd_export_csv(), cmd_find_leads() (+20 more)
+Cohesion: 0.10
+Nodes (31): _auto_export_leads(), cmd_add_lead(), cmd_bot(), cmd_dashboard(), cmd_dial(), cmd_dnc_add(), cmd_enrich(), cmd_export_csv() (+23 more)
 
 ### Community 17 - "db.py"
 Cohesion: 0.06
-Nodes (19): phone_in_leads(), _float(), import_csv(), _int(), _norm_key(), _pick(), geocode_city(), save() (+11 more)
+Nodes (29): insert_lead(), phone_in_leads(), _float(), import_csv(), _int(), _norm_key(), _pick(), geocode_city() (+21 more)
 
-### Community 18 - "normalizeManualContextText"
-Cohesion: 0.12
-Nodes (20): addManualContextText(), canRestoreManualEditElement(), collectManualContextPieces(), walk(), contextElementForManualEdit(), cssIdent(), directMixedTextRestoreNodes(), findManualEditRestoreElement() (+12 more)
+### Community 18 - "documentRefForElement"
+Cohesion: 0.06
+Nodes (39): addManualContextText(), canRestoreManualEditElement(), collectEditableTextRows(), visit(), collectManualContextPieces(), walk(), contextElementForManualEdit(), copyEditContainerContext() (+31 more)
 
 ### Community 19 - "documentRefForElement"
 Cohesion: 0.06
@@ -298,53 +295,53 @@ Nodes (39): addManualContextText(), canRestoreManualEditElement(), collectEditab
 Cohesion: 0.06
 Nodes (35): Advanced: Multiple Cookies or Custom Options, Advanced: Multiple Operations, Authentication State Reuse, Clear All Cookies, Clear All localStorage, Clear sessionStorage, Common Patterns, Cookies (+27 more)
 
-### Community 21 - "mountSvelteComponentVariant"
-Cohesion: 0.16
-Nodes (22): applyOriginalAttrsToSvelteAnchor(), commitAcceptedSvelteComponentToDom(), componentModuleCandidates(), describeMountFailure(), detectDevServerBase(), elementMatchesOriginalMarkup(), findInsertAnchorInDom(), findLiveElementForOriginalMarkup() (+14 more)
+### Community 21 - "showToast"
+Cohesion: 0.09
+Nodes (34): abandonForeignSession(), abandonSupersededGo(), applyOriginalAttrsToSvelteAnchor(), clearMountErrorCard(), commitAcceptedSvelteComponentToDom(), componentModuleCandidates(), describeMountFailure(), detectDevServerBase() (+26 more)
 
 ### Community 22 - "showToast"
 Cohesion: 0.09
 Nodes (34): abandonForeignSession(), abandonSupersededGo(), applyOriginalAttrsToSvelteAnchor(), clearMountErrorCard(), commitAcceptedSvelteComponentToDom(), componentModuleCandidates(), describeMountFailure(), detectDevServerBase() (+26 more)
 
 ### Community 23 - "Settings"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (17): Settings, make_lead(), test_allowed_in_dry_run(), test_attempt_limits_boundary(), test_blocks_attempt_limit(), test_blocks_dnc(), test_blocks_non_us_and_bad_status(), test_blocks_outside_window() (+9 more)
 
 ### Community 24 - ".agents/skills/impeccable/reference/new-work.md"
 Cohesion: 0.07
-Nodes (25): Recommended Actions, Craft (deprecated alias), Monorepo notes, Opting out of the boot check, Step 1: Run the pass, Step 2: Act by severity, Step 3: Deprecated fields are binding, Step 4: Do not overclaim on truth drift (+17 more)
+Nodes (25): Recommended Actions, Craft (deprecated alias), Apply, Live-mode signature params, Set the spatial thesis, Two isolated assessments, Verify, Visitor mode (+17 more)
 
 ### Community 25 - ".claude/skills/impeccable/reference/new-work.md"
-Cohesion: 0.08
-Nodes (23): Recommended Actions, Craft (deprecated alias), Apply, Live-mode signature params, Set the spatial thesis, Two isolated assessments, Verify, Visitor mode (+15 more)
-
-### Community 26 - "test_post_sale.py"
 Cohesion: 0.07
-Nodes (20): test_settings_frozen(), test_geocode_city_not_found(), test_save_places_filters_and_dedupes(), test_search_missing_key(), test_search_success_with_mock(), test_classify_website(), test_osm_build_query(), test_osm_save_and_cross_source_dedupe() (+12 more)
+Nodes (25): Recommended Actions, Craft (deprecated alias), Apply, Live-mode signature params, Set the spatial thesis, Two isolated assessments, Verify, Visitor mode (+17 more)
+
+### Community 26 - "get_lead"
+Cohesion: 0.07
+Nodes (25): add_owner_note(), get_enrichment(), get_lead(), save_enrichment(), CompositeImageSource, ImageSourceAdapter, LocalAssetSource, StockImageSource (+17 more)
 
 ### Community 27 - ".agents/skills/impeccable/SKILL.md"
 Cohesion: 0.10
 Nodes (16): Craft floor, Refuse, Verify, Constraints, Failure modes, Flow, $impeccable hooks, Routing (+8 more)
 
 ### Community 28 - ".agents/skills/impeccable/reference/live.md"
-Cohesion: 0.07
-Nodes (26): Step 1: Parse the request, Step 2: Reuse the page, then start, Step 3: Generate, Step 4: Accept and close, Cleanup, Exit, First-time setup, Handle `accept` (+18 more)
+Cohesion: 0.08
+Nodes (22): Apply at system scale, Audit before choosing, Choose a strategy, Contrast and perception, Live-mode signature params, Verify, Visitor mode, Cleanup (+14 more)
 
 ### Community 29 - ".claude/skills/impeccable/SKILL.md"
-Cohesion: 0.07
-Nodes (23): Craft floor, Refuse, Verify, Monorepo notes, Opting out of the boot check, Step 1: Run the pass, Step 2: Act by severity, Step 3: Deprecated fields are binding (+15 more)
+Cohesion: 0.10
+Nodes (16): Craft floor, Refuse, Verify, Constraints, Failure modes, Flow, /impeccable hooks, Routing (+8 more)
 
 ### Community 30 - ".claude/skills/impeccable/reference/live.md"
-Cohesion: 0.07
-Nodes (26): Step 1: Parse the request, Step 2: Reuse the page, then start, Step 3: Generate, Step 4: Accept and close, Cleanup, Exit, First-time setup, Handle `accept` (+18 more)
+Cohesion: 0.08
+Nodes (22): Apply at system scale, Audit before choosing, Choose a strategy, Contrast and perception, Live-mode signature params, Verify, Visitor mode, Cleanup (+14 more)
 
 ### Community 31 - "Responsive Design"
 Cohesion: 0.08
 Nodes (25): Assess Adaptation Challenge, Breakpoints: Content-Driven, Content Adaptation, Desktop Adaptation (Mobile → Desktop), Detect Input Method, Not Just Screen Size, Email Adaptation (Web → Email), Implement Adaptations, Layout Adaptation Patterns (+17 more)
 
 ### Community 32 - "initGlobalBar"
-Cohesion: 0.10
-Nodes (35): agentHasWorkInFlight(), agentStatusText(), barPaletteForTheme(), brandMarkSvg(), buildDesignHeader(), designPanelCss(), detectPageTheme(), ensureAgentPollTooltip() (+27 more)
+Cohesion: 0.13
+Nodes (24): agentHasWorkInFlight(), agentStatusText(), barPaletteForTheme(), brandMarkSvg(), detectPageTheme(), ensureAgentPollTooltip(), ensureSpinKeyframes(), hideAgentPollTooltip() (+16 more)
 
 ### Community 33 - "Responsive Design"
 Cohesion: 0.08
@@ -355,8 +352,8 @@ Cohesion: 0.13
 Nodes (24): agentHasWorkInFlight(), agentStatusText(), barPaletteForTheme(), brandMarkSvg(), detectPageTheme(), ensureAgentPollTooltip(), ensureSpinKeyframes(), hideAgentPollTooltip() (+16 more)
 
 ### Community 35 - "handleManualEditActivity"
-Cohesion: 0.17
-Nodes (26): clearStoredManualApplyState(), fetchPendingCount(), handleManualEditActivity(), hidePendingApplyDock(), manualApplyLoadingText(), manualApplyStateKey(), manualEditEventForCurrentPage(), numberOrNull() (+18 more)
+Cohesion: 0.19
+Nodes (24): clearStoredManualApplyState(), fetchPendingCount(), handleManualEditActivity(), hidePendingApplyDock(), manualApplyLoadingText(), manualApplyStateKey(), manualEditEventForCurrentPage(), numberOrNull() (+16 more)
 
 ### Community 36 - "handleManualEditActivity"
 Cohesion: 0.19
@@ -391,12 +388,12 @@ Cohesion: 0.10
 Nodes (20): Animate complex properties, Assess What "Extraordinary" Means Here, For data-heavy interfaces, For functional UI, For performance-critical UI, For visual/marketing surfaces, Implement with Discipline, Interact with the device (+12 more)
 
 ### Community 45 - "captureElementToBlob"
-Cohesion: 0.09
-Nodes (34): averageRgb01(), beginEditPin(), buildAnnotationsForCapture(), buildPinElement(), cancelEditingPin(), captureElementFromRenderedAncestor(), captureElementToBlob(), compileShader() (+26 more)
+Cohesion: 0.14
+Nodes (19): averageRgb01(), captureAndEmit(), captureElementFromRenderedAncestor(), captureElementToBlob(), compileShader(), cssColorToRgb01(), dominantRgb01(), findBackdropAncestor() (+11 more)
 
 ### Community 46 - "createLiveBrowserDomHelpers"
-Cohesion: 0.14
-Nodes (18): createLiveBrowserDomHelpers(), activeElementDeep(), cloneWithoutChrome(), copyTextViaSelection(), cssId(), liveUiRoot(), makeFrozenAnchor(), own() (+10 more)
+Cohesion: 0.16
+Nodes (15): createLiveBrowserDomHelpers(), activeElementDeep(), cloneWithoutChrome(), copyTextViaSelection(), cssId(), liveUiRoot(), makeFrozenAnchor(), raiseHitModal() (+7 more)
 
 ### Community 47 - "createLiveBrowserSessionState"
 Cohesion: 0.19
@@ -419,16 +416,16 @@ Cohesion: 0.10
 Nodes (20): 1. Name Browser Sessions Semantically, 2. Always Clean Up, 3. Delete Stale Browser Data, A/B Testing Sessions, Attach by channel name, Attach via browser extension, Attach via CDP endpoint, Attaching to a Running Browser (+12 more)
 
 ### Community 52 - "agent.py"
-Cohesion: 0.11
-Nodes (12): Compliance rules (always on), can_dial(), _evaluate(), GateResult, is_dnc(), local_now(), within_calling_window(), has_legal_review() (+4 more)
+Cohesion: 0.08
+Nodes (17): Compliance rules (always on), can_dial(), _evaluate(), GateResult, is_dnc(), local_now(), within_calling_window(), has_legal_review() (+9 more)
 
 ### Community 53 - "3. Heal"
 Cohesion: 0.11
 Nodes (18): 0. How generation works, 1.1 Prerequisite: workspace, 1.2 Prerequisite: seed test, 1.3 Explore the app, 1.4 Write the spec file, 1. Planning, 3.1 Find failing tests, 3.2 Debug one failure (+10 more)
 
 ### Community 54 - "actOnAgentTarget"
-Cohesion: 0.26
-Nodes (18): actOnAgentTarget(), agentTargetBusyReason(), agentTargetOverlayGone(), agentTargetTaken(), claimAgentTarget(), claimAndActOnAgentTarget(), declineAgentTargetBusy(), declineAgentTargetUnresolvable() (+10 more)
+Cohesion: 0.29
+Nodes (17): actOnAgentTarget(), agentTargetBusyReason(), agentTargetOverlayGone(), agentTargetTaken(), claimAgentTarget(), claimAndActOnAgentTarget(), declineAgentTargetBusy(), declineAgentTargetUnresolvable() (+9 more)
 
 ### Community 55 - "actOnAgentTarget"
 Cohesion: 0.29
@@ -478,9 +475,9 @@ Nodes (15): beginEditPin(), buildAnnotationsForCapture(), buildPinElement(), can
 Cohesion: 0.13
 Nodes (15): Attaching screenshots and videos to pull requests, Browser Automation with playwright-cli, Browser Sessions, Example: Debugging with DevTools, Example: Form submission, Example: Interactive session, Example: Multi-tab workflow, Installation (+7 more)
 
-### Community 67 - "config.py"
-Cohesion: 0.13
-Nodes (9): _bool(), _time(), JSONFormatter, setup_logging(), test_config_bool_default(), test_config_bool_parser(), test_config_time_parser(), test_json_formatter() (+1 more)
+### Community 67 - "test_hardening.py"
+Cohesion: 0.07
+Nodes (13): JSONFormatter, retry(), decorator(), sample_lead(), test_cli_auto_export_leads(), test_cli_dashboard_and_export(), test_cooldown_interval_between_attempts(), test_daily_call_cap_enforcement() (+5 more)
 
 ### Community 68 - "New visual work"
 Cohesion: 0.14
@@ -582,9 +579,9 @@ Nodes (10): Actions and navigation, Audit the language, Errors and permissions, 
 Cohesion: 0.18
 Nodes (11): 10. Help and Documentation, 1. Visibility of System Status, 2. Match Between System and Real World, 3. User Control and Freedom, 4. Consistency and Standards, 5. Error Prevention, 6. Recognition Rather Than Recall, 7. Flexibility and Efficiency of Use (+3 more)
 
-### Community 93 - ".claude/skills/impeccable/reference/document.md"
-Cohesion: 0.18
-Nodes (10): Pitfalls, Seed mode, Step 1: Route through new-work's workshop, Step 2: Write seed DESIGN.md, Step 3: Confirm, Style guidelines, The frontmatter: token schema, The markdown body: eight sections (canonical order) (+2 more)
+### Community 93 - "qa.py"
+Cohesion: 0.21
+Nodes (6): DetectResult, _free_port(), mobile_screenshot(), run_detector(), _summarize(), summarize_for_owner()
 
 ### Community 94 - ".claude/skills/impeccable/reference/polish.md"
 Cohesion: 0.18
@@ -606,9 +603,9 @@ Nodes (10): currency, delivery_promise, discounts_allowed, packages, id, include
 Cohesion: 0.20
 Nodes (10): Completion gate, Init flow, Step 1: Load current state, Step 2: Explore the project, Step 3: Interview for product truth, Step 4: Write PRODUCT.md, Step 5: Record workflow defaults, Step 6: Wrap up or resume (+2 more)
 
-### Community 100 - "retry"
-Cohesion: 0.20
-Nodes (4): retry(), decorator(), test_retry_failure(), test_retry_success()
+### Community 100 - ".claude/skills/impeccable/reference/document.md"
+Cohesion: 0.18
+Nodes (10): Pitfalls, Seed mode, Step 1: Route through new-work's workshop, Step 2: Write seed DESIGN.md, Step 3: Confirm, Style guidelines, The frontmatter: token schema, The markdown body: eight sections (canonical order) (+2 more)
 
 ### Community 101 - "Generate Combined Critique Report"
 Cohesion: 0.20
@@ -662,17 +659,17 @@ Nodes (9): Color, Components, Layout, Motion, Operate mode depth (and Read notes
 Cohesion: 0.22
 Nodes (8): Cadence, Confirm and stop, Phase 1: Discovery interview, Phase 2: Resolve the design direction, Phase 3: Write the brief, Round 1: purpose, people, and outcome, Round 2: material, behavior, and boundaries, Shape
 
-### Community 115 - ".agents/skills/impeccable/reference/adapt.native.md"
-Cohesion: 0.25
-Nodes (7): Adaptation Strategies, Assess Adaptation Challenge, Implement & Verify, Orientation & foldables, Phone → Tablet (iPad / large screens), Platform → platform (iOS ↔ Android), Web → native (porting a website or web app)
+### Community 115 - "onAnnotDown"
+Cohesion: 0.24
+Nodes (15): beginEditPin(), buildAnnotationsForCapture(), buildPinElement(), cancelEditingPin(), finalizeEditingPin(), initAnnotOverlay(), localCoords(), onAnnotDown() (+7 more)
 
 ### Community 116 - "Android platform"
 Cohesion: 0.25
 Nodes (8): Android platform, Color & theming, Components & motion, Layout & structure, The Android slop test, Touch targets, Typography, Verifying the build
 
-### Community 117 - ".agents/skills/impeccable/reference/colorize.md"
-Cohesion: 0.25
-Nodes (7): Apply at system scale, Audit before choosing, Choose a strategy, Contrast and perception, Live-mode signature params, Verify, Visitor mode
+### Community 117 - ".agents/skills/impeccable/reference/generate.md"
+Cohesion: 0.15
+Nodes (11): Step 1: Parse the request, Step 2: Reuse the page, then start, Step 3: Generate, Step 4: Accept and close, append-arrays, append-string, Config drift, Consent prompt (use this phrasing) (+3 more)
 
 ### Community 118 - "Persona-Based Design Testing"
 Cohesion: 0.25
@@ -682,9 +679,9 @@ Nodes (8): 1. Impatient Power User: "Alex", 2. Confused First-Timer: "Jordan", 3
 Cohesion: 0.25
 Nodes (7): Extract Flow, Step 1: Discover the Design System, Step 2: Identify Patterns, Step 3: Plan Extraction, Step 4: Extract & Enrich, Step 5: Migrate, Step 6: Document
 
-### Community 120 - ".claude/skills/impeccable/reference/colorize.md"
-Cohesion: 0.25
-Nodes (7): Apply at system scale, Audit before choosing, Choose a strategy, Contrast and perception, Live-mode signature params, Verify, Visitor mode
+### Community 120 - ".claude/skills/impeccable/reference/generate.md"
+Cohesion: 0.15
+Nodes (11): Step 1: Parse the request, Step 2: Reuse the page, then start, Step 3: Generate, Step 4: Accept and close, append-arrays, append-string, Config drift, Consent prompt (use this phrasing) (+3 more)
 
 ### Community 121 - "Android platform"
 Cohesion: 0.25
@@ -766,9 +763,9 @@ Nodes (6): AI Web Agency, How to use this with Antigravity, Optional skills and 
 Cohesion: 0.33
 Nodes (6): 1. Accessibility (VoiceOver / TalkBack), 2. Performance, 3. Appearance & Theming, 4. Platform Conformance (CRITICAL), 5. Adaptivity, Diagnostic Scan
 
-### Community 141 - ".agents/skills/impeccable/reference/bolder.md"
-Cohesion: 0.33
-Nodes (5): Before you finish, Scope is sovereign, The amplification, The skeleton test, Why it reads flat
+### Community 141 - ".agents/skills/impeccable/reference/adapt.native.md"
+Cohesion: 0.25
+Nodes (7): Adaptation Strategies, Assess Adaptation Challenge, Implement & Verify, Orientation & foldables, Phone → Tablet (iPad / large screens), Platform → platform (iOS ↔ Android), Web → native (porting a website or web app)
 
 ### Community 142 - "Diagnostic Scan"
 Cohesion: 0.33
@@ -778,9 +775,9 @@ Nodes (6): 1. Accessibility (VoiceOver / TalkBack), 2. Performance, 3. Appearanc
 Cohesion: 0.40
 Nodes (5): Attaching Screenshots and Videos to Pull Requests, From a local session, From CI, Limits, When to attach
 
-### Community 144 - "DESIGN.md"
-Cohesion: 0.33
-Nodes (4): Layout, QA before shipping a template change, Rules, Themes
+### Community 144 - ".agents/skills/impeccable/reference/doctor.md"
+Cohesion: 0.25
+Nodes (7): Monorepo notes, Opting out of the boot check, Step 1: Run the pass, Step 2: Act by severity, Step 3: Deprecated fields are binding, Step 4: Do not overclaim on truth drift, What this owns, and what it does not
 
 ### Community 145 - "Skills and tools: what we use, what we skip, and why"
 Cohesion: 0.33
@@ -794,25 +791,25 @@ Nodes (4): interface, default_prompt, display_name, short_description
 Cohesion: 0.40
 Nodes (4): Impeccable Documenter, Input Contract, Output Contract, Workflow
 
-### Community 148 - "Region map"
-Cohesion: 0.40
-Nodes (4): Containment, Painted material, Region map, What varies independently
+### Community 148 - ".agents/skills/impeccable/reference/bolder.md"
+Cohesion: 0.33
+Nodes (5): Before you finish, Scope is sovereign, The amplification, The skeleton test, Why it reads flat
 
 ### Community 149 - "Impeccable Documenter"
 Cohesion: 0.40
 Nodes (4): Impeccable Documenter, Input Contract, Output Contract, Workflow
 
-### Community 150 - "Impeccable Documenter"
-Cohesion: 0.40
-Nodes (4): Impeccable Documenter, Input Contract, Output Contract, Workflow
+### Community 150 - ".claude/skills/impeccable/reference/doctor.md"
+Cohesion: 0.25
+Nodes (7): Monorepo notes, Opting out of the boot check, Step 1: Run the pass, Step 2: Act by severity, Step 3: Deprecated fields are binding, Step 4: Do not overclaim on truth drift, What this owns, and what it does not
 
-### Community 151 - "Region map"
-Cohesion: 0.40
-Nodes (4): Containment, Painted material, Region map, What varies independently
+### Community 151 - "Visualize: Direction Comps & Asset Production"
+Cohesion: 0.33
+Nodes (5): After approval: the comp becomes a spec, Generate three compositional options, One approval point, Plates and provenance, Visualize: Direction Comps & Asset Production
 
-### Community 152 - "enableInlineEdit"
-Cohesion: 0.40
-Nodes (5): collectEditableTextRows(), visit(), enableInlineEdit(), onInlineInput(), wrapMixedContentTextNodes()
+### Community 152 - "Persuade and Experience"
+Cohesion: 0.50
+Nodes (3): Comps, Directions, Persuade and Experience
 
 ### Community 153 - "Advanced Mocking with run-code"
 Cohesion: 0.40
@@ -822,9 +819,9 @@ Nodes (5): Advanced Mocking with run-code, Conditional Response Based on Request
 Cohesion: 0.40
 Nodes (5): 2.1 Inputs, 2.2 Generate one scenario, 2.3 Generate multiple scenarios, 2.4 Run generated tests, 2. Generate
 
-### Community 155 - "dispatch_call"
-Cohesion: 0.19
-Nodes (11): record_legal_review(), _create_dispatch(), dispatch_call(), test_cli_dial_command(), test_create_dispatch_helper(), test_dispatch_dry_run_outside_window(), test_dispatch_dry_run_within_window(), test_dispatch_lead_not_found() (+3 more)
+### Community 155 - "Persuade and Experience"
+Cohesion: 0.50
+Nodes (3): Comps, Directions, Persuade and Experience
 
 ### Community 156 - "Compliance checklist"
 Cohesion: 0.40
@@ -834,25 +831,17 @@ Nodes (4): Compliance checklist, Must-have before the first real call, What the 
 Cohesion: 0.50
 Nodes (4): Heuristics Scoring Guide, Issue Severity (P0–P3), Reference Material, Score Summary
 
-### Community 158 - "Operate"
-Cohesion: 0.50
-Nodes (3): Comps, Directions, Operate
+### Community 158 - "DESIGN.md"
+Cohesion: 0.33
+Nodes (4): Layout, QA before shipping a template change, Rules, Themes
 
-### Community 159 - "Read"
-Cohesion: 0.50
-Nodes (3): Comps, Directions, Read
+### Community 159 - "Impeccable Documenter"
+Cohesion: 0.40
+Nodes (4): Impeccable Documenter, Input Contract, Output Contract, Workflow
 
 ### Community 160 - "Heuristics Scoring Guide"
 Cohesion: 0.50
 Nodes (4): Heuristics Scoring Guide, Issue Severity (P0–P3), Reference Material, Score Summary
-
-### Community 161 - "Architecture"
-Cohesion: 0.40
-Nodes (4): Architecture, External services, Key design decisions, Tables (SQLite)
-
-### Community 162 - "Read"
-Cohesion: 0.50
-Nodes (3): Comps, Directions, Read
 
 ### Community 172 - "Visualize: Direction Comps & Asset Production"
 Cohesion: 0.33
@@ -862,29 +851,25 @@ Nodes (5): After approval: the comp becomes a spec, Generate three compositional
 Cohesion: 0.40
 Nodes (4): CLAUDE.md - AI Web Agency Guidelines, Coding Standards & Compliance, Commands, Knowledge Graph (graphify)
 
-### Community 174 - "Operate"
-Cohesion: 0.50
-Nodes (3): Comps, Directions, Operate
-
 ## Knowledge Gaps
 - **1 isolated node(s):** `ai-web-agency`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1228 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1258 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `env()` connect `insert_lead` to `Responsive Design`, `get_lead`, `SalesAgent`, `Settings`, `Responsive Design`?**
-  _High betweenness centrality (0.139) - this node is a cross-community bridge._
-- **Are the 67 inferred relationships involving `Settings` (e.g. with `can_dial()` and `_evaluate()`) actually correct?**
-  _`Settings` has 67 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `env()` connect `insert_lead` to `Responsive Design`, `db.py`, `SalesAgent`, `db.py`, `Settings`, `get_lead`, `Responsive Design`?**
+  _High betweenness centrality (0.153) - this node is a cross-community bridge._
+- **Are the 72 inferred relationships involving `Settings` (e.g. with `can_dial()` and `_evaluate()`) actually correct?**
+  _`Settings` has 72 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ai-web-agency` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `.agents/skills/impeccable/scripts/live-browser.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.027381069634590763 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.027874902874902876 - nodes in this community are weakly interconnected._
 - **Why does `Safe Areas: Handle the Notch` connect `Responsive Design` to `insert_lead`?**
-  _High betweenness centrality (0.102) - this node is a cross-community bridge._
+  _High betweenness centrality (0.108) - this node is a cross-community bridge._
 - **Should `.claude/skills/impeccable/scripts/live-browser.js` be split into smaller, more focused modules?**
   _Cohesion score 0.027874902874902876 - nodes in this community are weakly interconnected._
 - **Should `connectSSE` be split into smaller, more focused modules?**
-  _Cohesion score 0.05047250859106529 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.060534822215692036 - nodes in this community are weakly interconnected._
