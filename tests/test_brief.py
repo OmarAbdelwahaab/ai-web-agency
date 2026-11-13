@@ -81,6 +81,9 @@ def test_render_brief_markdown(test_db, sample_lead, tmp_path: Path):
     assert "Clara S." in md
     assert "25 years old" in md
     assert "Hard Constraints (Non-Negotiable)" in md
+    # Ensure layout prescriptions and template section lists were removed
+    assert "Recommended Structure" not in md
+    assert "Palette Advice" not in md
 
 
 def test_generate_brief_file_writing(test_db, sample_lead, tmp_path: Path):
@@ -94,9 +97,15 @@ def test_generate_brief_file_writing(test_db, sample_lead, tmp_path: Path):
     assert json_p.name == "brief.json"
     assert md_p.name == "brief.md"
 
-    saved_json = json.loads(json_p.read_text(encoding="utf-8"))
-    assert saved_json["slug"] == brief_data["slug"]
-    assert saved_json["business_name"] == "Oak Hill Bakery"
+    facts_p = out_dir / brief_data["slug"] / "facts.json"
+    assert facts_p.exists()
+    saved_facts = json.loads(facts_p.read_text(encoding="utf-8"))
+    assert saved_facts["business_name"] == "Oak Hill Bakery"
+    assert saved_facts["business_type"] == "bakery"
+    assert saved_facts["phone_e164"] == "+15125557788"
+    assert "photos" in saved_facts
+    assert "top_reviews" in saved_facts
+    assert saved_facts["owner_notes"] == "Family-run for 8 years. Sourdough starter is 25 years old."
 
 
 def test_cli_brief(test_db, sample_lead, monkeypatch, capsys, tmp_path: Path):
