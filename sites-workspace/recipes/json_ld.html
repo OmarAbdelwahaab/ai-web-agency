@@ -1,0 +1,44 @@
+<!-- Recipe: LocalBusiness JSON-LD -->
+<!-- Schema.org structured data for local business SEO. Populate only with verified facts. -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": "Oak Hill Bakery",
+  "telephone": "+15125557788",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "5600 Highway 290 W",
+    "addressLocality": "Austin",
+    "addressRegion": "TX",
+    "postalCode": "78735",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 30.2312,
+    "longitude": -97.8541
+  },
+  "url": "https://oak-hill-bakery-1.example.com",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "06:30",
+      "closes": "14:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday"],
+      "opens": "07:00",
+      "closes": "13:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "65"
+  }
+}
+</script>

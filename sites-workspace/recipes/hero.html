@@ -1,0 +1,178 @@
+<!-- Recipe: Hero Variants -->
+<!-- Building blocks for above-the-fold hero sections. Pick or adapt one variant. -->
+
+<!-- =========================================================================
+     Variant 1: Split Layout (Text + Photo)
+     Great for businesses with authentic photos (bakeries, restaurants, salons).
+========================================================================= -->
+<section class="hero-split">
+  <div class="hero-content">
+    <div class="badge">Locally Owned &bull; Serving Austin, TX</div>
+    <h1>Artisan Sourdough & Fresh Pastries Daily</h1>
+    <p class="hero-desc">
+      Baked fresh every morning with traditional 24-hour fermentation. Stop by for our signature loaves, espresso, and warm hospitality.
+    </p>
+    <div class="hero-actions">
+      <a href="tel:+15125557788" class="btn btn-primary">Call (512) 555-7788</a>
+      <a href="#hours" class="btn btn-secondary">View Hours & Location</a>
+    </div>
+  </div>
+  <div class="hero-media">
+    <img src="assets/bakery-front.jpg" alt="Fresh artisan sourdough bread at Oak Hill Bakery" loading="eager" />
+  </div>
+</section>
+
+<style>
+.hero-split {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .hero-split {
+    flex-direction: row;
+    align-items: center;
+    padding: 4.5rem 2rem;
+  }
+  .hero-content, .hero-media {
+    flex: 1;
+  }
+}
+.hero-content h1 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.15;
+  font-weight: 800;
+  margin: 1rem 0;
+  color: #1e293b;
+}
+.hero-desc {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 2rem;
+}
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: #f1f5f9;
+  color: #0f172a;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  min-height: 48px;
+}
+.btn-primary {
+  background: #0f172a;
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: #334155;
+}
+.btn-secondary {
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+.hero-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+</style>
+
+
+<!-- =========================================================================
+     Variant 2: Centered Typography & Direct Trust Signals
+     Ideal when no local photos exist, emphasizing typography and verified facts.
+========================================================================= -->
+<section class="hero-centered">
+  <div class="rating-pill">
+    <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    <span class="rating-text">4.9 Star Rating (65 Verified Reviews)</span>
+  </div>
+  <h1>Fast, Dependable Emergency Plumbing in Austin</h1>
+  <p class="hero-lead">
+    Family-run shop solving leaks, water heaters, and drain clogs since 2012. Direct owner contact, transparent pricing, and zero surprises.
+  </p>
+  <div class="hero-buttons">
+    <a href="tel:+15125550100" class="cta-call">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+      Call (512) 555-0100
+    </a>
+  </div>
+</section>
+
+<style>
+.hero-centered {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  max-width: 840px;
+  margin: 0 auto;
+}
+.rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.stars {
+  color: #d97706;
+}
+.hero-centered h1 {
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+.hero-lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 1.5rem auto 2.5rem;
+  max-width: 680px;
+}
+.cta-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 1rem 2.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  min-height: 52px;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+.cta-call:hover {
+  background: #1d4ed8;
+}
+</style>

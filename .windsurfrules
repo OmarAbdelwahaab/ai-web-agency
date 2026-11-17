@@ -1,0 +1,8 @@
+# AI Web Agency - Rules for Cursor / Windsurf
+
+- Test command: `.venv\Scripts\pytest.exe -q`
+- CLI command: `.venv\Scripts\agency.exe <command>`
+- This project uses graphify (`graphify-out/`) for architecture understanding.
+- Query graph with: `.venv\Scripts\graphify.exe query "<question>"`
+- Keep the graph updated after modifying code: `.venv\Scripts\graphify.exe update .`
+- Always respect compliance rules: no hardcoded secrets, no fabricated business facts, testable modular code.

@@ -1,0 +1,164 @@
+<!-- Recipe: Verified Opening Hours with "Open Now" Status -->
+<!-- Clean opening hours table with lightweight vanilla JS checking current local day/time to render live status. -->
+
+<section class="hours-section" id="hours">
+  <div class="hours-card">
+    <div class="hours-header">
+      <h3>Opening Hours</h3>
+      <div id="live-hours-status" class="status-badge status-checking">
+        <span class="status-dot"></span>
+        <span class="status-label">Checking status...</span>
+      </div>
+    </div>
+
+    <table class="hours-table" aria-label="Business opening hours">
+      <tbody>
+        <tr data-day="1,2,3,4,5">
+          <td class="day-col">Mon–Fri</td>
+          <td class="time-col">6:30 AM – 2:00 PM</td>
+        </tr>
+        <tr data-day="6">
+          <td class="day-col">Saturday</td>
+          <td class="time-col">7:00 AM – 1:00 PM</td>
+        </tr>
+        <tr data-day="0">
+          <td class="day-col">Sunday</td>
+          <td class="time-col">Closed</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="hours-note">*Fresh batches come out at 7:00 AM. Call ahead for bulk or custom orders.</p>
+  </div>
+</section>
+
+<style>
+.hours-section {
+  padding: 3rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+.hours-card {
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+}
+.hours-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.hours-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.status-open {
+  background: #ecfdf5;
+  color: #065f46;
+}
+.status-open .status-dot {
+  background: #10b981;
+}
+.status-closed {
+  background: #f1f5f9;
+  color: #64748b;
+}
+.status-closed .status-dot {
+  background: #94a3b8;
+}
+.hours-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.hours-table tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+.hours-table tr.today {
+  background: #f8fafc;
+  font-weight: 700;
+}
+.hours-table td {
+  padding: 0.75rem 0.5rem;
+  font-size: 0.95rem;
+}
+.day-col {
+  color: #1e293b;
+}
+.time-col {
+  text-align: right;
+  color: #475569;
+  font-feature-settings: "tnum";
+}
+.hours-note {
+  margin-top: 1.25rem;
+  font-size: 0.825rem;
+  color: #64748b;
+  font-style: italic;
+}
+</style>
+
+<script>
+(function() {
+  // Simple verified hours status evaluator
+  // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+  const schedule = [
+    { days: [1, 2, 3, 4, 5], open: 6.5, close: 14.0 }, // 6:30 AM - 2:00 PM
+    { days: [6], open: 7.0, close: 13.0 },              // 7:00 AM - 1:00 PM
+    { days: [0], open: null, close: null }              // Sunday Closed
+  ];
+
+  const now = new Date();
+  const currentDay = now.getDay();
+  const currentHour = now.getHours() + (now.getMinutes() / 60);
+
+  let isOpen = false;
+  for (const item of schedule) {
+    if (item.days.includes(currentDay)) {
+      if (item.open !== null && item.close !== null) {
+        if (currentHour >= item.open && currentHour < item.close) {
+          isOpen = true;
+        }
+      }
+      break;
+    }
+  }
+
+  const badge = document.getElementById("live-hours-status");
+  if (badge) {
+    badge.className = "status-badge " + (isOpen ? "status-open" : "status-closed");
+    const label = badge.querySelector(".status-label");
+    if (label) {
+      label.textContent = isOpen ? "Open Now" : "Closed Now";
+    }
+  }
+
+  // Highlight today's row in table
+  const rows = document.querySelectorAll(".hours-table tbody tr");
+  rows.forEach(r => {
+    const days = (r.getAttribute("data-day") || "").split(",").map(Number);
+    if (days.includes(currentDay)) {
+      r.classList.add("today");
+    }
+  });
+})();
+</script>

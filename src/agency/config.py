@@ -39,6 +39,7 @@ class Settings:
     log_format: str = field(default_factory=lambda: os.environ.get("LOG_FORMAT", "text"))
 
     places_api_key: str = field(default_factory=lambda: os.environ.get("GOOGLE_PLACES_API_KEY", ""))
+    geoapify_api_key: str = field(default_factory=lambda: os.environ.get("GEOAPIFY_API_KEY", ""))
     overpass_url: str = field(default_factory=lambda: os.environ.get("OVERPASS_URL", "https://overpass-api.de/api/interpreter"))
     search_api_key: str = field(default_factory=lambda: os.environ.get("SEARCH_API_KEY", ""))
     search_engine_id: str = field(default_factory=lambda: os.environ.get("SEARCH_ENGINE_ID", ""))
@@ -64,6 +65,10 @@ class Settings:
 
     pricing_path: Path = field(default_factory=lambda: ROOT / "pricing.yaml")
     output_dir: Path = field(default_factory=lambda: ROOT / "output")
+    sites_workspace_dir: Path = field(default_factory=lambda: ROOT / "sites-workspace")
+    leads_csv_path: Path = field(default_factory=lambda: Path(os.environ.get("LEADS_CSV_PATH", "leads.csv")))
+    assets_dir: Path = field(default_factory=lambda: ROOT / "data" / "assets")
+    richness_threshold: float = field(default_factory=lambda: float(os.environ.get("RICHNESS_THRESHOLD", "0.6")))
 
 
 def get_settings() -> Settings:

@@ -1,0 +1,58 @@
+<!-- Recipe: Sticky Mobile Call Bar -->
+<!-- Bottom-anchored persistent call button visible only on mobile screens. Ensures high-intent phone conversion. -->
+
+<div class="mobile-call-bar" aria-label="Quick contact bar">
+  <a href="tel:+15125557788" class="mobile-call-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
+    </svg>
+    <span>Call Now: (512) 555-7788</span>
+  </a>
+</div>
+
+<style>
+/* Visible on mobile (< 768px), hidden on desktop */
+.mobile-call-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+}
+@media (min-width: 768px) {
+  .mobile-call-bar {
+    display: none;
+  }
+}
+.mobile-call-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 50px;
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+}
+.mobile-call-btn:hover {
+  background: #334155;
+}
+
+/* Ensure page body has bottom padding on mobile so content isn't covered by call bar */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+</style>

@@ -34,6 +34,7 @@ def post_sale_env(tmp_path):
         pricing_path=Path("pricing.yaml"),
         telegram_token="test_token_123",
         telegram_chat_id="999888",
+        deploy_enabled=False,
     )
     return conn, lid, s, tmp_path
 

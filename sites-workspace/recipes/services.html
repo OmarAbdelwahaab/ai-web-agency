@@ -1,0 +1,136 @@
+<!-- Recipe: Services Grid -->
+<!-- Responsive card grid for services or core offerings. -->
+
+<section class="services-section" id="services">
+  <div class="services-container">
+    <div class="section-header">
+      <h2>Our Core Services</h2>
+      <p>Dependable, transparent local service with guaranteed workmanship.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Service Card 1 -->
+      <div class="service-card">
+        <div class="service-icon">&#128295;</div>
+        <h3>Leak Detection & Repair</h3>
+        <p>Comprehensive electronic detection and swift repair of hidden pipe leaks, slab leaks, and fixtures.</p>
+        <div class="service-footer">
+          <span class="price-badge">From $120</span>
+          <a href="tel:+15125550100" class="service-link">Call to book &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Service Card 2 -->
+      <div class="service-card">
+        <div class="service-icon">&#9832;</div>
+        <h3>Water Heater Installation</h3>
+        <p>Same-day replacement and maintenance for standard tank and modern tankless water heating systems.</p>
+        <div class="service-footer">
+          <span class="price-badge">Free Estimates</span>
+          <a href="tel:+15125550100" class="service-link">Call to book &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Service Card 3 -->
+      <div class="service-card">
+        <div class="service-icon">&#128688;</div>
+        <h3>Drain Cleaning & Hydro-Jetting</h3>
+        <p>Clearing stubborn sewer main blockages and slow drains quickly without damaging home plumbing lines.</p>
+        <div class="service-footer">
+          <span class="price-badge">Emergency Service</span>
+          <a href="tel:+15125550100" class="service-link">Call to book &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.services-section {
+  padding: 4rem 1.5rem;
+  background: #f8fafc;
+}
+.services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.section-header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+.section-header p {
+  font-size: 1.125rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.service-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.service-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+.service-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.service-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+.service-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #475569;
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+.price-badge {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+.service-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+</style>
