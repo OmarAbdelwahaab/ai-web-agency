@@ -1,0 +1,128 @@
+<!-- Recipe: Menu & Product List -->
+<!-- Clean, organized food/drink or product menu with category headings and dot leaders or clean flex alignment. -->
+
+<section class="menu-section" id="menu">
+  <div class="menu-container">
+    <div class="menu-header">
+      <h2>Fresh Daily Menu</h2>
+      <p>Baked in small batches every morning using certified organic flour.</p>
+    </div>
+
+    <!-- Category 1 -->
+    <div class="menu-category">
+      <h3 class="category-title">Artisan Breads</h3>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-main">
+            <span class="item-name">Country Sourdough Boule</span>
+            <span class="item-price">$9.50</span>
+          </div>
+          <p class="item-desc">Naturally leavened with our 25-year-old starter, crisp blistered crust, airy crumb.</p>
+        </div>
+
+        <div class="menu-item">
+          <div class="item-main">
+            <span class="item-name">Rosemary & Sea Salt Focaccia</span>
+            <span class="item-price">$7.00</span>
+          </div>
+          <p class="item-desc">Cold-fermented olive oil dough baked in cast iron with fresh garden rosemary.</p>
+        </div>
+
+        <div class="menu-item">
+          <div class="item-main">
+            <span class="item-name">Seeded Multigrain Batard</span>
+            <span class="item-price">$10.00</span>
+          </div>
+          <p class="item-desc">Toasted sesame, flax, pumpkin, and sunflower seeds with sprouted wheat.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category 2 -->
+    <div class="menu-category">
+      <h3 class="category-title">Pastries & Coffee</h3>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-main">
+            <span class="item-name">Cardamom Morning Bun</span>
+            <span class="item-price">$4.75</span>
+          </div>
+          <p class="item-desc">Laminated croissant dough rolled in freshly ground cardamom and citrus sugar.</p>
+        </div>
+
+        <div class="menu-item">
+          <div class="item-main">
+            <span class="item-name">Single Origin Espresso</span>
+            <span class="item-price">$3.50</span>
+          </div>
+          <p class="item-desc">Locally roasted beans brewed to double shot perfection.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.menu-section {
+  padding: 4rem 1.5rem;
+  background: #ffffff;
+}
+.menu-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.menu-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.menu-header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+.menu-header p {
+  color: #64748b;
+  font-size: 1.1rem;
+}
+.menu-category {
+  margin-bottom: 2.5rem;
+}
+.category-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.item-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+.item-price {
+  color: #b45309;
+  font-feature-settings: "tnum";
+}
+.item-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+</style>

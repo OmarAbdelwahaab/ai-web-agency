@@ -11,6 +11,14 @@ output/*
 !output/.gitkeep
 data/*
 !data/.gitkeep
+reports/*
+!reports/.gitkeep
+sites-workspace/*
+!sites-workspace/README.md
+!sites-workspace/recipes/
+!sites-workspace/recipes/**
+!sites-workspace/references/
+!sites-workspace/references/**
 .pytest_cache/
 node_modules/
 .playwright/

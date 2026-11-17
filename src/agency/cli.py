@@ -234,6 +234,24 @@ def cmd_brief(a):
     print(f"  Markdown: {md_p}")
 
 
+def cmd_import_site(a):
+    from agency.sitegen.import_site import import_site
+
+    s = get_settings()
+    try:
+        res = import_site(a.slug, variant=a.variant, settings=s)
+    except (FileNotFoundError, ValueError) as e:
+        sys.exit(f"error: {e}")
+
+    print(f"Imported site for '{a.slug}' successfully:")
+    print(f"  Source: {res['source_dir']}")
+    print(f"  Target: {res['target_dir']}")
+    if res.get("variant"):
+        print(f"  Variant: {res['variant']}")
+    print(f"  QA Status: {res['qa_summary']}")
+
+
+
 def cmd_compare(a):
     from agency.sitegen.compare import compare_lead
 
@@ -446,6 +464,11 @@ def main(argv=None):
     bf = sub.add_parser("brief", help="generate output/<slug>/brief.json and brief.md for custom site design")
     bf.add_argument("lead_id", type=int, help="lead id to generate design brief for")
     bf.set_defaults(fn=cmd_brief)
+
+    imp_p = sub.add_parser("import-site", help="import built site from sites-workspace/<slug>/ to output/<slug>/")
+    imp_p.add_argument("slug", help="slug identifier of the site (e.g. apex-heating-air-1)")
+    imp_p.add_argument("--variant", choices=["a", "b"], default=None, help="target variant folder (a or b)")
+    imp_p.set_defaults(fn=cmd_import_site)
 
     cmp_p = sub.add_parser("compare", help="run QA and generate side-by-side A/B comparison page for a lead")
     cmp_p.add_argument("lead_id", type=int, help="lead id to compare")

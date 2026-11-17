@@ -5,6 +5,7 @@ import csv
 import datetime
 import json
 import random
+import shutil
 import sqlite3
 from pathlib import Path
 from typing import Any
@@ -63,7 +64,7 @@ def resolve_site_label(label: str, mapping: dict[str, str]) -> str:
 
 
 def run_variant_qa(variant_dir: Path) -> dict[str, Any]:
-    """Run design detector QA on a specific variant directory."""
+    """Run QA gate on a specific variant directory."""
     index_html = variant_dir / "index.html"
     if not index_html.exists():
         return {
@@ -73,13 +74,25 @@ def run_variant_qa(variant_dir: Path) -> dict[str, Any]:
             "summary": "Site file missing",
         }
 
-    res = qa.run_detector(variant_dir)
+    res = qa.run_qa_gate(variant_dir)
     return {
         "status": res.status,
         "count": res.count,
         "detail": res.detail,
-        "summary": qa.summarize_for_owner(res),
+        "summary": qa.summarize_gate_result(res),
     }
+
+
+def _copy_variant_to_neutral(src_dir: Path, dst_dir: Path) -> None:
+    """Copy variant files to neutral site-1/ or site-2/ directory for blind review."""
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    if not src_dir.exists():
+        return
+    for item in src_dir.iterdir():
+        if item.is_file():
+            shutil.copyfile(item, dst_dir / item.name)
+        elif item.is_dir() and item.name in ("assets", "images"):
+            shutil.copytree(item, dst_dir / item.name, dirs_exist_ok=True)
 
 
 def render_compare_html(
@@ -90,8 +103,8 @@ def render_compare_html(
     qa_2: dict[str, Any],
 ) -> str:
     """Generate self-contained side-by-side comparison page with blind Site 1 and Site 2 labels."""
-    site_1_file = f"variants/{mapping['site_1']}/index.html"
-    site_2_file = f"variants/{mapping['site_2']}/index.html"
+    site_1_file = "site-1/index.html"
+    site_2_file = "site-2/index.html"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -340,7 +353,13 @@ def compare_lead(
     qa_1 = qa_a if mapping["site_1"] == "a" else qa_b
     qa_2 = qa_b if mapping["site_2"] == "b" else qa_a
 
-    # 3. Create output/<slug>/compare.html
+    # 3. Setup neutral directories site-1/ and site-2/ under slug_dir
+    site_1_dir = slug_dir / "site-1"
+    site_2_dir = slug_dir / "site-2"
+    _copy_variant_to_neutral(variants_dir / mapping["site_1"], site_1_dir)
+    _copy_variant_to_neutral(variants_dir / mapping["site_2"], site_2_dir)
+
+    # 4. Create output/<slug>/compare.html
     html_content = render_compare_html(
         slug=slug,
         business_name=lead["name"],
@@ -351,7 +370,7 @@ def compare_lead(
     compare_html_path = slug_dir / "compare.html"
     compare_html_path.write_text(html_content, encoding="utf-8")
 
-    # 4. Export phone screenshots if requested
+    # 5. Export phone screenshots if requested
     shot_a_path = var_a_dir / "mobile.png"
     shot_b_path = var_b_dir / "mobile.png"
     shot_a_ok = False

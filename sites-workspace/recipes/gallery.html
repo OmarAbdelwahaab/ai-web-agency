@@ -1,0 +1,90 @@
+<!-- Recipe: Photo Gallery Grid -->
+<!-- Responsive photo gallery for authentic owner photos. Always mobile-first without horizontal blowout. -->
+
+<section class="gallery-section" id="gallery">
+  <div class="gallery-container">
+    <div class="gallery-header">
+      <h2>Inside the Bakery</h2>
+      <p>Handcrafted daily from raw ingredients to oven-fresh golden crusts.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <figure class="gallery-item">
+        <img src="assets/bread-counter.jpg" alt="Artisan bread display on oak shelves" loading="lazy" />
+        <figcaption>Fresh morning loaves on our front counter</figcaption>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="assets/baker-kneading.jpg" alt="Baker shaping sourdough dough" loading="lazy" />
+        <figcaption>Hand-shaping sourdough with 24h cold ferment</figcaption>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="assets/pastries.jpg" alt="Golden croissants and morning buns" loading="lazy" />
+        <figcaption>Butter croissants warm from the 7 AM bake</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+.gallery-section {
+  padding: 4rem 1.5rem;
+  background: #fdfaf6;
+}
+.gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.gallery-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.gallery-header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+.gallery-header p {
+  color: #64748b;
+  font-size: 1.1rem;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.gallery-item {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+.gallery-item figcaption {
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 500;
+}
+</style>

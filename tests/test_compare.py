@@ -83,8 +83,10 @@ def test_render_compare_html(tmp_path: Path):
     assert "Test Cafe" in html
     assert "Site 1" in html
     assert "Site 2" in html
-    assert "variants/b/index.html" in html
-    assert "variants/a/index.html" in html
+    assert "site-1/index.html" in html
+    assert "site-2/index.html" in html
+    assert "variants/b" not in html
+    assert "variants/a" not in html
     assert "first_impression" in html
     assert "Desktop View" in html
     assert "Mobile Phone (375px)" in html
@@ -130,6 +132,8 @@ def test_compare_lead_execution(test_db, mock_lead_id, tmp_path: Path):
     assert res["lead_id"] == mock_lead_id
     assert res["compare_html"].exists()
     assert res["mapping_path"].exists()
+    assert (out_dir / slug / "site-1" / "index.html").exists()
+    assert (out_dir / slug / "site-2" / "index.html").exists()
 
 
 def test_verdict_rule_path_a_wins(test_db, tmp_path: Path):

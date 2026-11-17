@@ -65,6 +65,7 @@ class Settings:
 
     pricing_path: Path = field(default_factory=lambda: ROOT / "pricing.yaml")
     output_dir: Path = field(default_factory=lambda: ROOT / "output")
+    sites_workspace_dir: Path = field(default_factory=lambda: ROOT / "sites-workspace")
     leads_csv_path: Path = field(default_factory=lambda: Path(os.environ.get("LEADS_CSV_PATH", "leads.csv")))
     assets_dir: Path = field(default_factory=lambda: ROOT / "data" / "assets")
     richness_threshold: float = field(default_factory=lambda: float(os.environ.get("RICHNESS_THRESHOLD", "0.6")))

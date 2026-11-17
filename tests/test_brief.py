@@ -100,12 +100,21 @@ def test_generate_brief_file_writing(test_db, sample_lead, tmp_path: Path):
     facts_p = out_dir / brief_data["slug"] / "facts.json"
     assert facts_p.exists()
     saved_facts = json.loads(facts_p.read_text(encoding="utf-8"))
+    assert saved_facts["name"] == "Oak Hill Bakery"
     assert saved_facts["business_name"] == "Oak Hill Bakery"
     assert saved_facts["business_type"] == "bakery"
     assert saved_facts["phone_e164"] == "+15125557788"
     assert "photos" in saved_facts
     assert "top_reviews" in saved_facts
     assert saved_facts["owner_notes"] == "Family-run for 8 years. Sourdough starter is 25 years old."
+
+    # Verify sites-workspace export
+    ws_dir = settings.sites_workspace_dir / brief_data["slug"]
+    assert (ws_dir / "facts.json").exists()
+    assert (ws_dir / "brief.md").exists()
+    assert (ws_dir / "assets").exists()
+    ws_files = {p.name for p in ws_dir.iterdir()}
+    assert ws_files == {"facts.json", "brief.md", "assets"}
 
 
 def test_cli_brief(test_db, sample_lead, monkeypatch, capsys, tmp_path: Path):
